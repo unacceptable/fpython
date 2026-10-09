@@ -41,6 +41,36 @@ $ fpython build --release --static demo.fpy -o demo   # one static binary, ready
 | Deployment | interpreter + sources | **one static binary**; a `FROM scratch` image is about 1 MB |
 | Libraries | everything | everything: pure-Python dependencies are compiled to native code, and the rest runs on embedded CPython 3.14 |
 
+## Performance
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="bench/benchmarks-dark.png">
+  <img alt="Benchmark chart: wall-clock time per benchmark for fpython, Python 3.14, Go and Rust, and the overall speed-up over Python" src="bench/benchmarks.png">
+</picture>
+
+Across six workloads, fpython is **9.1x faster than Python 3.14** (geometric mean) and runs at
+0.83x the speed of Go and 0.64x the speed of Rust. The Python versions
+(`bench/python/*.py`) are written the way a Python developer would write them: no annotations, and
+fast builtins such as `Counter`, `bytearray` slicing, `sum()` and tuples. Go and Rust are idiomatic
+ports, included as native reference points.
+
+| benchmark | fpython | Python 3.14 | Go | Rust | fpython vs Python |
+|---|---:|---:|---:|---:|---:|
+| fib (recursion) | 0.031s | 0.777s | 0.034s | 0.026s | **25.1x faster** |
+| nbody (float/objects) | 0.067s | 4.908s | 0.107s | 0.040s | **73.3x faster** |
+| spectral norm | 0.036s | 3.132s | 0.038s | 0.025s | **86.3x faster** |
+| sieve (list[bool]) | 0.132s | 0.040s | 0.031s | 0.020s | 3.3x slower |
+| words (str/dict) | 0.161s | 0.466s | 0.107s | 0.124s | **2.9x faster** |
+| binary trees (GC) | 0.759s | 3.114s | 0.892s | 1.247s | **4.1x faster** |
+
+Times are the best of 3 runs on an Apple Silicon Mac (wall clock, including process start-up);
+every implementation must print identical output. Python wins `sieve`: there `bytearray` slice
+assignment runs entirely in C, while fpython still stores `list[bool]` as 8-byte words.
+
+Reproduce with `cargo build --release && python3 bench/run.py`, which writes
+[bench/RESULTS.md](bench/RESULTS.md), `bench/results.json` and the charts (redraw them with
+`python3 bench/chart.py`; requires matplotlib).
+
 ## Install
 
 ```sh
@@ -160,36 +190,6 @@ ENTRYPOINT ["/app"]
 ```
 
 [`examples/fastapi-docker`](examples/fastapi-docker) serves FastAPI with uvicorn from `FROM scratch`.
-
-## Performance
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="bench/benchmarks-dark.png">
-  <img alt="Benchmark chart: wall-clock time per benchmark for fpython, Python 3.14, Go and Rust, and the overall speed-up over Python" src="bench/benchmarks.png">
-</picture>
-
-Across six workloads, fpython is **9.1x faster than Python 3.14** (geometric mean) and runs at
-0.83x the speed of Go and 0.64x the speed of Rust. The Python versions
-(`bench/python/*.py`) are written the way a Python developer would write them: no annotations, and
-fast builtins such as `Counter`, `bytearray` slicing, `sum()` and tuples. Go and Rust are idiomatic
-ports, included as native reference points.
-
-| benchmark | fpython | Python 3.14 | Go | Rust | fpython vs Python |
-|---|---:|---:|---:|---:|---:|
-| fib (recursion) | 0.031s | 0.777s | 0.034s | 0.026s | **25.1x faster** |
-| nbody (float/objects) | 0.067s | 4.908s | 0.107s | 0.040s | **73.3x faster** |
-| spectral norm | 0.036s | 3.132s | 0.038s | 0.025s | **86.3x faster** |
-| sieve (list[bool]) | 0.132s | 0.040s | 0.031s | 0.020s | 3.3x slower |
-| words (str/dict) | 0.161s | 0.466s | 0.107s | 0.124s | **2.9x faster** |
-| binary trees (GC) | 0.759s | 3.114s | 0.892s | 1.247s | **4.1x faster** |
-
-Times are the best of 3 runs on an Apple Silicon Mac (wall clock, including process start-up);
-every implementation must print identical output. Python wins `sieve`: there `bytearray` slice
-assignment runs entirely in C, while fpython still stores `list[bool]` as 8-byte words.
-
-Reproduce with `cargo build --release && python3 bench/run.py`, which writes
-[bench/RESULTS.md](bench/RESULTS.md), `bench/results.json` and the charts (redraw them with
-`python3 bench/chart.py`; requires matplotlib).
 
 ## How it works
 
