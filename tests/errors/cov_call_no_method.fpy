@@ -1,0 +1,6 @@
+# expect: 'A' object has no method 'zap'
+class A:
+    x: int = 0
+
+
+A().zap()

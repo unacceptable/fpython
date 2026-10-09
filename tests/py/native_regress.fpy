@@ -1,0 +1,12 @@
+import pyregress
+
+print(pyregress.set_splat(), pyregress.implicit_context())
+print(pyregress.class_in_function(3))
+print(pyregress.qualnames())
+import importlib
+from typing import Any
+
+# B29: frozensets from Python keep their type
+pb: Any = importlib.import_module("builtins")
+fs: Any = pb.frozenset([2, 1])
+print(fs, len(fs), 1 in fs, sorted(fs))

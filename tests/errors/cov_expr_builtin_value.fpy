@@ -1,0 +1,2 @@
+# expect: builtin 'len' cannot be used as a first-class value
+f = len

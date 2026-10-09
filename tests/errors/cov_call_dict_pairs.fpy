@@ -1,0 +1,2 @@
+# expect: dict() needs an iterable of 2-tuples
+d = dict([1, 2])

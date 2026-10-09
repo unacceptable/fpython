@@ -1,0 +1,3 @@
+# expect: starred elements in tuple literals are not supported
+xs = [1]
+t = (0, *xs)

@@ -1,0 +1,2 @@
+# expect: expected str, got bool
+x: str = True

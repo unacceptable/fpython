@@ -1,0 +1,3 @@
+# expect: cannot be used as a value here
+type Num = int
+x = Num

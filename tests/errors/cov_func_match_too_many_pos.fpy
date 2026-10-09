@@ -1,0 +1,13 @@
+# expect: too many positional sub-patterns
+from dataclasses import dataclass
+
+
+@dataclass
+class P:
+    x: int
+
+
+def f(p: P) -> None:
+    match p:
+        case P(1, 2):
+            print("x")

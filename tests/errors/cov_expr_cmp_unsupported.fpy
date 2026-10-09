@@ -1,0 +1,6 @@
+# expect: '<' not supported between
+class A:
+    pass
+
+
+x = A() < A()

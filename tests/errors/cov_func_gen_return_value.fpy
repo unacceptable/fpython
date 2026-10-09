@@ -1,0 +1,7 @@
+# expect: generators cannot return a value
+from typing import Iterator
+
+
+def g() -> Iterator[int]:
+    yield 1
+    return 5

@@ -1,0 +1,10 @@
+# expect: protocols cannot be instantiated
+from typing import Protocol
+
+
+class P(Protocol):
+    def m(self) -> int:
+        ...
+
+
+p = P()

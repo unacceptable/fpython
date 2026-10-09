@@ -1,0 +1,118 @@
+chained 5 5
+aliased [1, 2, 3]
+tuple 1 two
+list targets 3 4
+star mid 1 [2, 3, 4] 5
+star first [10, 20] 30
+star empty 7 []
+nested 1 2 3
+unpack error caught
+star unpack error: not enough values to unpack (expected at least 2, got 1)
+annotated 3 [3] {'a': [3]} [] 1 9
+attr aug 7
+list extend [1, 2, 0, 1, 2]
+dict aug {'x': 6, 'y': 7}
+dict list aug {'k': [1, 2, 3]}
+dict str aug {'a': 'xy'}
+list aug [101, 2, 15]
+grid ab .
+nested list aug [[1, 9], [2]]
+ops abab 2.25 9
+class var 2
+del list [1, 4, 5, 6]
+del slices [4, 5]
+del dict {'a': 1, 'c': 3}
+del missing 'zz'
+[0, 9, 9, 9, 3, 4]
+[9, 9, 3, 4]
+[9, 9, 3, 7]
+while broke at 3
+while else ran 3
+odd 1
+odd 3
+odd 5
+for else ran
+down 10
+down 7
+down 4
+down 1
+var step 5
+var step 3
+var step 1
+var step pos 0
+var step pos 2
+var step pos 4
+range error: range() arg 3 must not be zero
+enum 1 a
+enum 2 b
+enum 3 c
+enum kw 5 x
+enum kw 6 y
+rev 3
+rev 2
+rev 1
+rev range 2
+rev range 1
+rev range 0
+items a 1
+items b 2
+dict key q
+dict val 1
+dict val 2
+tuple elt 1
+tuple elt 2
+tuple elt 3
+byte 65
+byte 66
+zip 1 x
+zip 2 y
+char h
+char i
+set 3
+outer 0
+outer 2
+1 2 2
+late 42
+['n', 'm']
+gen 1
+gen 2
+any setitem 5
+any unpack 1 2
+any attr 77
+assert: math is broken
+bare assert caught
+6
+peephole {'a': 20, 'b': 7}
+groups {'a': [1]}
+tally 2 2
+consume 6
+logged via return
+maybe {}
+any item 1
+any item two
+any item [3]
+dyn iter 4
+dyn iter 5
+[5, 6]
+bytes var 120
+bytes var 121
+kv tuple ('a', 1)
+kv tuple ('b', 2)
+keys a
+keys b
+zip iter 0 a
+zip iter 1 b
+zip iter 2 c
+zip any 1 7
+zip any 2 8
+enum nested 0 1 a
+enum nested 1 2 b
+rev str b
+rev str a
+tuple var 4
+tuple var 5
+tuple var 6
+genexp 0
+genexp 3
+genexp 6
+while true 3

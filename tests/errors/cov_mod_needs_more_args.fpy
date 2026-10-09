@@ -1,0 +1,3 @@
+# expect: dict needs more type arguments
+def f(x: dict[str]) -> int:
+    return 0

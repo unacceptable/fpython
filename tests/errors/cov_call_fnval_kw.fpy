@@ -1,0 +1,6 @@
+# expect: keyword arguments are not supported when calling a function value
+from typing import Callable
+
+
+def f(g: Callable[[int], int]) -> int:
+    return g(x=1)

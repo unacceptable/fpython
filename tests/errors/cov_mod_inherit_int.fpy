@@ -1,0 +1,6 @@
+# expect: cannot inherit from int
+class A(int):
+    pass
+
+
+print(A())

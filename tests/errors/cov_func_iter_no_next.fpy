@@ -1,0 +1,12 @@
+# expect: __iter__ must return an object with __next__
+class B:
+    pass
+
+
+class A:
+    def __iter__(self) -> B:
+        return B()
+
+
+for x in A():
+    print(x)

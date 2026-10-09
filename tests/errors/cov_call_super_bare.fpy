@@ -1,0 +1,4 @@
+# expect: super() must be used as super().method(...)
+class A:
+    def m(self) -> None:
+        s = super()

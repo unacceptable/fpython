@@ -1,0 +1,6 @@
+# expect: function has no method 'zap'
+def f() -> int:
+    return 1
+
+
+print(f.zap())

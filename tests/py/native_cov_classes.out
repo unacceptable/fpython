@@ -1,0 +1,13 @@
+('Meta', [('flavor', 'vanilla'), ('size', 3)], True)
+[('PluginA', 'a'), ('PluginB', None)]
+(['Decorated'], 'decorated', ['x', 'y'], 5)
+(False, [0, 1, 4, 9], True, ('Decorated', 'inner'))
+('Child[Base(1),2]', 'Grand<Child[Base(5),6]>', 'Base(7)')
+('Child[Base(3),6]', 'Child', 'Base(9)')
+(25.0, None, 212.0, 'computed')
+(Vec(4, 6), Vec(2, 2), Vec(3, 6), Vec(2, 4), Vec(-1, -2), True, True, [Vec(1, 2), Vec(3, 4)], 2, [1, 2])
+(2, True, False, False, Vec(10, 20), 1)
+'UsesNamed.field_a'
+(Point(x=3, y=-4, tags=[]), 7, True, ['a'])
+('RED=1', <Color.GREEN: 2>, ['RED', 'GREEN'])
+(15, 2)

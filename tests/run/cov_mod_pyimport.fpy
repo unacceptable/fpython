@@ -1,0 +1,47 @@
+import fractions
+import fractions as fr
+import decimal
+import xml.etree.ElementTree
+from fractions import Fraction
+from decimal import Decimal as D
+import fractions
+from typing import Any
+import typing
+
+
+class MyFrac(fractions.Fraction):
+    @staticmethod
+    def make(a: int, b: int) -> Any:
+        return Fraction(a, b)
+
+    @classmethod
+    def unit(cls) -> Any:
+        return cls(1, 1)
+
+    @property
+    def doubled(self) -> Any:
+        return self * 2
+
+    def half(self) -> Any:
+        return self / 2
+
+
+def show(x: fr.Fraction, d: D, e: decimal.Decimal) -> str:
+    return f"{x} {d} {e}"
+
+
+def subs(x: fractions.Fraction[int], y: typing.List[int], z: typing.Optional[str]) -> str:
+    return f"{x} {y} {z}"
+
+
+def main() -> None:
+    print(subs(Fraction(1, 2), [1], None))
+    f = Fraction(1, 3) + fr.Fraction(1, 6)
+    print(f)
+    print(show(f, D("1.5"), decimal.Decimal("2.25")))
+    print(MyFrac.make(2, 4), MyFrac.unit(), MyFrac(3, 4).doubled, MyFrac(1, 2).half())
+    root = xml.etree.ElementTree.fromstring("<a><b>t</b></a>")
+    print(root.tag, len(root))
+
+
+main()

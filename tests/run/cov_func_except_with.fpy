@@ -1,0 +1,250 @@
+from typing import Iterator
+
+
+class AppError(Exception):
+    pass
+
+
+class NetError(AppError):
+    def __init__(self, code: int) -> None:
+        super().__init__(f"net {code}")
+        self.code = code
+
+
+class DiskError(AppError):
+    pass
+
+
+class Resource:
+    def __init__(self, name: str, suppress: bool) -> None:
+        self.name = name
+        self.suppress = suppress
+        self.log: list[str] = []
+
+    def __enter__(self) -> "Resource":
+        print("enter", self.name)
+        return self
+
+    def __exit__(self, et: object, ev: object, tb: object) -> bool:
+        print("exit", self.name, "with error" if ev is not None else "clean")
+        return self.suppress
+
+
+class Plain:
+    def __enter__(self) -> int:
+        print("plain enter")
+        return 7
+
+    def __exit__(self, et: object, ev: object, tb: object) -> None:
+        print("plain exit")
+
+
+def risky(n: int) -> int:
+    if n == 1:
+        raise NetError(404)
+    if n == 2:
+        raise DiskError("disk full")
+    if n == 3:
+        raise ValueError("bad value")
+    if n == 4:
+        raise KeyError("k")
+    if n == 5:
+        raise RuntimeError
+    return n * 10
+
+
+def handle(n: int) -> str:
+    try:
+        r = risky(n)
+    except NetError as e:
+        return f"net code {e.code}"
+    except (DiskError, ValueError) as e:
+        return f"disk or value: {e}"
+    except AppError:
+        return "app"
+    except KeyError as e:
+        return "key " + type(e).__name__
+    except Exception as e:
+        return f"generic {type(e).__name__}"
+    else:
+        return f"ok {r}"
+    finally:
+        print("finally for", n)
+
+
+def reraise(n: int) -> None:
+    try:
+        risky(n)
+    except AppError:
+        print("logging and re-raising")
+        raise
+
+
+def chain() -> None:
+    try:
+        try:
+            risky(3)
+        except ValueError as e:
+            raise AppError("wrapped") from e
+    except AppError as outer:
+        print("outer:", outer)
+
+
+def bare_except() -> str:
+    try:
+        risky(4)
+    except:
+        return "caught everything"
+    return "unreachable"
+
+
+def finally_return() -> int:
+    total = 0
+    for i in range(3):
+        try:
+            if i == 1:
+                continue
+            total += i
+        finally:
+            total += 100
+    return total
+
+
+def finally_break() -> int:
+    n = 0
+    while True:
+        try:
+            n += 1
+            if n == 3:
+                break
+        finally:
+            print("loop finally", n)
+    return n
+
+
+def try_finally_only() -> None:
+    try:
+        print("body")
+    finally:
+        print("cleanup")
+
+
+def nested_try() -> None:
+    try:
+        try:
+            raise NetError(500)
+        finally:
+            print("inner finally")
+    except NetError as e:
+        print("outer caught", e.code)
+
+
+def handler_raises() -> None:
+    try:
+        try:
+            risky(3)
+        except ValueError:
+            risky(2)
+    except DiskError as e:
+        print("handler raised:", e)
+
+
+def with_tests() -> None:
+    with Resource("a", False) as r:
+        print("inside", r.name)
+    with Resource("b", True):
+        raise ValueError("swallowed")
+    print("after suppressed")
+    try:
+        with Resource("c", False):
+            raise ValueError("propagates")
+    except ValueError as e:
+        print("got", e)
+    with Resource("d", False) as d1, Resource("e", False) as e1:
+        print("two managers", d1.name, e1.name)
+    with Plain() as p:
+        print("plain value", p)
+    try:
+        with Plain():
+            raise KeyError("x")
+    except KeyError:
+        print("plain did not suppress")
+
+
+def with_return() -> str:
+    with Resource("ret", False):
+        return "returned from with"
+
+
+def with_loop() -> None:
+    for i in range(3):
+        with Resource(f"loop{i}", False):
+            if i == 0:
+                continue
+            if i == 2:
+                break
+            print("loop body", i)
+
+
+def returns_optional(flag: bool) -> int | None:
+    if flag:
+        return 1
+    return
+
+
+def return_in_try(n: int) -> int:
+    try:
+        if n > 0:
+            return n
+        raise ValueError("neg")
+    except ValueError:
+        return -1
+    finally:
+        print("return_in_try finally")
+
+
+def gen_with_finally() -> Iterator[int]:
+    try:
+        yield 1
+        yield 2
+    finally:
+        print("gen cleanup")
+
+
+def early_gen(n: int) -> Iterator[int]:
+    for i in range(n):
+        if i == 2:
+            return
+        yield i
+
+
+def none_return() -> None:
+    return None
+
+
+for i in range(7):
+    print(handle(i))
+try:
+    reraise(1)
+except NetError as e:
+    print("re-raised", e.code)
+reraise(0)
+chain()
+print(bare_except())
+print(finally_return())
+print(finally_break())
+try_finally_only()
+nested_try()
+handler_raises()
+with_tests()
+print(with_return())
+with_loop()
+print(returns_optional(True), returns_optional(False))
+print(return_in_try(5), return_in_try(-5))
+print(list(gen_with_finally()))
+print(list(early_gen(10)))
+none_return()
+try:
+    raise DiskError
+except DiskError as de:
+    print("raised class", type(de).__name__)

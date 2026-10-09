@@ -1,0 +1,6 @@
+# expect: 'List' needs type arguments, e.g. list[int]
+from typing import List
+
+
+def f(x: List) -> int:
+    return 0

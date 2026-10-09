@@ -1,0 +1,3 @@
+# expect: cannot set attribute on int
+x = 5
+x.real = 3

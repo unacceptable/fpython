@@ -1,0 +1,3 @@
+# expect: cannot infer the type of 'cache' from an empty literal
+cache = {}
+print(len(cache))

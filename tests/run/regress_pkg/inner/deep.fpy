@@ -1,0 +1,11 @@
+DEPTH = 10
+
+
+class Box[T]:
+    def __init__(self, item: T) -> None:
+        self.item = item
+
+
+class Point:
+    def __init__(self, x: int) -> None:
+        self.x = x

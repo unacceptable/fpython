@@ -1,0 +1,6 @@
+# expect: functions with *args/**kwargs cannot be used as values
+def g(*xs: int) -> int:
+    return 0
+
+
+f = g

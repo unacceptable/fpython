@@ -1,0 +1,2 @@
+# expect: expected int, got float
+x: int = 1.5

@@ -1,0 +1,157 @@
+from typing import Callable, Iterator
+
+
+def countdown(n: int) -> Iterator[int]:
+    while n > 0:
+        yield n
+        n -= 1
+
+
+def chained_gen() -> Iterator[int]:
+    yield from countdown(3)
+    yield from [10, 20]
+    yield 99
+
+
+def pairs(xs: list[str]) -> Iterator[tuple[int, str]]:
+    for i, x in enumerate(xs):
+        yield i, x
+
+
+def gen_in_try() -> Iterator[str]:
+    for s in ["a", "b", "c"]:
+        try:
+            if s == "b":
+                raise ValueError(s)
+            yield s
+        except ValueError as e:
+            yield "err-" + str(e)
+
+
+def infinite() -> Iterator[int]:
+    i = 0
+    while True:
+        yield i
+        i += 1
+
+
+def make_adder(n: int) -> Callable[[int], int]:
+    def add(x: int) -> int:
+        return x + n
+
+    return add
+
+
+def make_acc() -> tuple[Callable[[int], int], Callable[[], int]]:
+    total = 0
+
+    def add(x: int) -> int:
+        nonlocal total
+        total += x
+        return total
+
+    def get() -> int:
+        return total
+
+    return add, get
+
+
+def outer_inner() -> int:
+    a = 1
+
+    def middle() -> int:
+        b = 2
+
+        def inner() -> int:
+            nonlocal a
+            a += 10
+            return a + b
+
+        return inner()
+
+    r = middle()
+    return r + a
+
+
+def recursive_nested(n: int) -> int:
+    def fact(k: int) -> int:
+        if k <= 1:
+            return 1
+        return k * fact(k - 1)
+
+    return fact(n)
+
+
+def closure_gen(limit: int) -> list[int]:
+    def gen() -> Iterator[int]:
+        for i in range(limit):
+            yield i * 2
+
+    return list(gen())
+
+
+def counter_factory() -> Callable[[], int]:
+    count = 0
+
+    def tick() -> int:
+        nonlocal count
+        count += 1
+        return count
+
+    tick()
+    return tick
+
+
+def apply_twice(f: Callable[[int], int], v: int) -> int:
+    return f(f(v))
+
+
+def callbacks() -> list[str]:
+    out: list[str] = []
+
+    def log(s: str) -> None:
+        out.append(s)
+
+    log("one")
+    log("two")
+    return out
+
+
+def default_closure(flag: bool) -> str:
+    msg = "hi"
+
+    def show(suffix: str) -> str:
+        return msg + suffix
+
+    if flag:
+        return show("!")
+    return show("?")
+
+
+print(list(countdown(4)))
+print(list(chained_gen()))
+print(list(pairs(["x", "y"])))
+print(list(gen_in_try()))
+it = infinite()
+print([next(it) for _ in range(4)])
+for v in infinite():
+    if v > 2:
+        break
+    print("inf", v)
+g = countdown(2)
+print(next(g), next(g), next(g, -1))
+add5 = make_adder(5)
+print(add5(1), apply_twice(add5, 0))
+adder, getter = make_acc()
+adder(3)
+adder(4)
+print("acc", getter())
+print("outer_inner", outer_inner())
+print("fact", recursive_nested(6))
+print("closure gen", closure_gen(4))
+t = counter_factory()
+print("ticks", t(), t())
+print(callbacks())
+print(default_closure(True), default_closure(False))
+squares = (x * x for x in range(5))
+print(sum(squares))

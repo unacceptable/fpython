@@ -1,0 +1,190 @@
+from typing import Callable
+
+
+def section(name: str) -> None:
+    print(f"-- {name}")
+
+
+def main() -> None:
+    section("str methods")
+    s = "Hello, World"
+    print(s.lower(), s.upper(), s.casefold(), s.swapcase(), s.title(), s.capitalize())
+    print(s.split(), s.split(", "), s.split("o", 1), s.rsplit("o", 1), "a b c".rsplit(maxsplit=1))
+    print(
+        "x\ny\r\nz".splitlines(),
+        "x\ny\n".splitlines(True),
+        s.find("o"),
+        s.rfind("o"),
+        s.index("W"),
+        s.rindex("o"),
+        s.count("l"),
+    )
+    print(
+        s.startswith("He"),
+        s.startswith(("x", "Hel")),
+        s.endswith(("d", "q")),
+        s.startswith("World", 7),
+    )
+    print("  pad  ".strip(), "xxpadxx".strip("x"), "xxpad".lstrip("x"), "padxx".rstrip("x"))
+    print(
+        "7".zfill(4),
+        "-7".zfill(4),
+        "ab".center(7, "-"),
+        "ab".ljust(5, "."),
+        "ab".rjust(5),
+        "a\tb".expandtabs(),
+    )
+    print(
+        "abc".isalpha(),
+        "abc1".isalnum(),
+        "123".isdigit(),
+        "123".isnumeric(),
+        "123".isdecimal(),
+        " \t".isspace(),
+        "ABC".isupper(),
+        "abc".islower(),
+        "Ab Cd".istitle(),
+        "_x1".isidentifier(),
+    )
+    print(
+        "a-b-c".replace("-", "+"),
+        "a-b-c".replace("-", "+", 1),
+        "".join(["x", "y"]),
+        "-".join("abc"),
+    )
+    print(
+        "key=val".partition("="),
+        "a=b=c".rpartition("="),
+        "nope".partition("="),
+        "prefix_x".removeprefix("prefix_"),
+        "x.py".removesuffix(".py"),
+    )
+    print("héllo".encode(), b"bytes".decode(), "abc"[::-1], "abcdef"[1:5:2], "abc"[-1], "abc"[:-1])
+    print(
+        ord("é"),
+        chr(233),
+        hex(-42),
+        oct(8),
+        bin(10),
+        format(255, "x"),
+        format(3.14159, ".2f"),
+        format("s", ">3"),
+    )
+    section("list methods")
+    xs = [3, 1, 2]
+    xs.extend([5, 4])
+    xs.insert(1, 9)
+    print(xs, xs.index(9), xs.count(1), xs.pop(), xs.pop(0), xs)
+    xs.remove(9)
+    xs.reverse()
+    print(xs, xs.copy(), sorted(xs, reverse=True))
+    xs.sort(key=lambda v: -v)
+    print(xs)
+    xs.clear()
+    print(xs, len(xs))
+    ys = [1, 2, 3, 4, 5]
+    ys[1:3] = [20, 30, 40]
+    del ys[0]
+    del ys[-2:]
+    print(ys, ys * 2, [0] + ys, 30 in ys, 99 not in ys)
+    words = ["pear", "fig", "banana"]
+    words.sort(key=len)
+    print(words, min(words, key=len), max(words), sorted(words, key=lambda w: w[-1]))
+    section("dict methods")
+    d: dict[str, int] = {"a": 1}
+    d.update({"b": 2, "c": 3})
+    print(d.get("a"), d.get("z"), d.get("z", 0), d.setdefault("d", 4), d.pop("a"), d.pop("zz", -1))
+    print(list(d.keys()), list(d.values()), list(d.items()), d.copy() == d, len(d))
+    print(d.popitem(), d)
+    d.clear()
+    print(d, dict(zip(["x", "y"], [1, 2])), dict(a=1, b=2), {**{"p": 1}, "q": 2})
+    counts: dict[str, int] = {}
+    for ch in "mississippi":
+        counts[ch] = counts.get(ch, 0) + 1
+    print(sorted(counts.items()))
+    inv: dict[int, list[str]] = {}
+    for k, v in counts.items():
+        inv.setdefault(v, []).append(k)
+    print(sorted(inv.items()))
+    section("set methods")
+    s1 = {1, 2, 3}
+    s2 = {3, 4}
+    s1.add(5)
+    s1.discard(42)
+    print(
+        sorted(s1.union(s2)),
+        sorted(s1.intersection(s2)),
+        sorted(s1.difference(s2)),
+        sorted(s1.symmetric_difference(s2)),
+    )
+    print(
+        s1.issubset({1, 2, 3, 5, 9}),
+        s1.issuperset({1, 2}),
+        s1.isdisjoint({7}),
+        sorted(s1 - s2),
+        3 in s1,
+    )
+    s3 = set([4, 4, 5])
+    s3.update({6})
+    s3.remove(4)
+    print(sorted(s3), len(s3), sorted({x * x for x in range(5)}))
+    section("numbers")
+    print(
+        abs(-3),
+        abs(-2.5),
+        round(7.567, 1),
+        round(-2.5),
+        divmod(-9, 4),
+        pow(2, 10),
+        pow(2, 10, 1000),
+        2**(-1)
+        if False
+        else 0.5,
+    )
+    print(
+        int("ff", 16),
+        int("0b101", 0),
+        int(" 42 "),
+        float(" 1.5 "),
+        float("inf") > 1e308,
+        (255).bit_length(),
+        (7).bit_count(),
+        (2.0).is_integer(),
+    )
+    print(
+        max(3, 7, 5),
+        min(2.5, 1.0),
+        sum([1.5, 2.5]),
+        sum(range(101)),
+        any([]),
+        all([]),
+        10 // 3,
+        -10 // 3,
+        10 % -3,
+        2**0.5,
+    )
+    print(7 & 3, 7 | 8, 7 ^ 2, ~7, 1 << 5, 256 >> 3, True + True, int(True), float(3))
+    section("functions as values")
+    ops: dict[str, Callable[[int, int], int]] = {
+        "add": lambda a, b: a + b,
+        "mul": lambda a, b: a * b,
+    }
+    print(ops["add"](2, 3), ops["mul"](2, 3))
+    sq = list(map(lambda v: v * v, [1, 2, 3]))
+    print(
+        sq,
+        list(filter(lambda v: v > 1, sq)),
+        list(map(str, [1, 2])),
+        list(zip([1, 2], ["a", "b"])),
+    )
+    print(
+        list(enumerate("ab", start=1)),
+        list(reversed("abc")),
+        sorted("cab"),
+        list(range(5, 0, -2)),
+    )
+    it = iter([10, 20])
+    print(next(it), next(it), next(it, -1))
+
+
+main()

@@ -1,0 +1,9 @@
+# expect: throw() needs an exception, got int
+from typing import Iterator
+
+
+def g() -> Iterator[int]:
+    yield 1
+
+
+g().throw(3)

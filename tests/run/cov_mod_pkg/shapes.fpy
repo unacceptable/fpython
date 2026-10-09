@@ -1,0 +1,27 @@
+from dataclasses import dataclass
+
+type Coord = tuple[int, int]
+
+_hidden = 5
+ORIGIN_NAME = "origin"
+
+
+@dataclass
+class Point:
+    x: int
+    y: int
+
+    def coord(self) -> Coord:
+        return (self.x, self.y)
+
+
+class Box[T]:
+    def __init__(self, item: T) -> None:
+        self.item = item
+
+    def get(self) -> T:
+        return self.item
+
+
+def make_point(x: int, y: int) -> Point:
+    return Point(x, y)

@@ -1,0 +1,4 @@
+# expect: tuple[int, str] is not iterable
+t = (1, "a")
+for x in t:
+    print(x)

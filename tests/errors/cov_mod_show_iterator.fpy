@@ -1,0 +1,6 @@
+# expect: got Iterator[int]
+from typing import Iterator
+
+
+def f(a: Iterator[int]) -> int:
+    return a

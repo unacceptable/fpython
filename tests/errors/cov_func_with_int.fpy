@@ -1,0 +1,3 @@
+# expect: 'int' object has no method '__enter__'
+with 5:
+    pass

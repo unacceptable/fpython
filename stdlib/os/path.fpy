@@ -1,0 +1,96 @@
+# fpython stdlib: os.path
+from fpython import extern
+
+
+@extern("fpy_path_exists")
+def exists(p: str) -> bool:
+    ...
+
+
+@extern("fpy_path_isfile")
+def isfile(p: str) -> bool:
+    ...
+
+
+@extern("fpy_path_isdir")
+def isdir(p: str) -> bool:
+    ...
+
+
+@extern("fpy_getcwd")
+def _getcwd() -> str:
+    ...
+
+
+sep: str = "/"
+
+
+def join(a: str, *parts: str) -> str:
+    out = a
+    for p in parts:
+        if p.startswith("/"):
+            out = p
+        elif out == "" or out.endswith("/"):
+            out = out + p
+        else:
+            out = out + "/" + p
+    return out
+
+
+def basename(p: str) -> str:
+    i = p.rfind("/")
+    return p[i + 1 :]
+
+
+def dirname(p: str) -> str:
+    i = p.rfind("/")
+    if i < 0:
+        return ""
+    head = p[:i]
+    if head == "":
+        return "/"
+    return head
+
+
+def split(p: str) -> tuple[str, str]:
+    return (dirname(p), basename(p))
+
+
+def splitext(p: str) -> tuple[str, str]:
+    base = basename(p)
+    i = base.rfind(".")
+    if i <= 0:
+        return (p, "")
+    cut = len(p) - len(base) + i
+    return (p[:cut], p[cut:])
+
+
+def isabs(p: str) -> bool:
+    return p.startswith("/")
+
+
+def abspath(p: str) -> str:
+    if isabs(p):
+        return normpath(p)
+    return normpath(join(_getcwd(), p))
+
+
+def normpath(p: str) -> str:
+    if p == "":
+        return "."
+    absolute = p.startswith("/")
+    out: list[str] = []
+    for part in p.split("/"):
+        if part == "" or part == ".":
+            continue
+        if part == "..":
+            if out and out[-1] != "..":
+                out.pop()
+            elif not absolute:
+                out.append("..")
+            continue
+        out.append(part)
+    s = "/".join(out)
+    if absolute:
+        return "/" + s
+    return s if s else "."

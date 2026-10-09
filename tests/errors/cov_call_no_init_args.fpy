@@ -1,0 +1,6 @@
+# expect: E() takes no arguments
+class E:
+    pass
+
+
+e = E(1)

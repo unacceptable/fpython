@@ -1,0 +1,9 @@
+# expect: incompatible signature
+class A:
+    def m(self, x: int) -> int:
+        return x
+
+
+class B(A):
+    def m(self, x: str) -> int:
+        return 1

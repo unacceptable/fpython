@@ -1,0 +1,7 @@
+# expect: expects 2 arguments
+class V:
+    def __add__(self, a: "V", b: "V") -> "V":
+        return a
+
+
+print(V() + V())

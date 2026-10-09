@@ -1,0 +1,6 @@
+# expect: got type[A]
+class A:
+    pass
+
+
+x: int = A

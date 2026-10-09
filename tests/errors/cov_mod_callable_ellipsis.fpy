@@ -1,0 +1,6 @@
+# expect: Callable[...] requires an explicit parameter list
+from typing import Callable
+
+
+def f(x: Callable[..., int]) -> int:
+    return 0

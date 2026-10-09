@@ -1,0 +1,5 @@
+# expect: function must return int
+def f(x: int) -> int:
+    if x > 0:
+        return
+    return 1

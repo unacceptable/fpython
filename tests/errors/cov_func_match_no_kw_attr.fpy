@@ -1,0 +1,13 @@
+# expect: no attribute 'zz'
+from dataclasses import dataclass
+
+
+@dataclass
+class P:
+    x: int
+
+
+def f(p: P) -> None:
+    match p:
+        case P(zz=1):
+            print("x")

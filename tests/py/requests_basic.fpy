@@ -1,0 +1,6 @@
+import urllib.parse
+
+q = urllib.parse.quote("a b&c")
+print(q, urllib.parse.unquote(q))
+parts = urllib.parse.urlparse("https://example.com:8080/path?x=1#frag")
+print(parts.scheme, parts.netloc, parts.port, parts.path, parts.query)

@@ -1,0 +1,7 @@
+# expect: this method cannot be used as a value
+class A:
+    def m(self, *xs: int) -> int:
+        return 0
+
+
+f = A().m

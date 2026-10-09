@@ -1,0 +1,52 @@
+import math
+import typing
+import cov_mod_pkg.shapes
+import cov_mod_pkg.shapes as sh
+import cov_mod_pkg.inner.deep
+from cov_mod_pkg import shapes, greet, VERSION
+from cov_mod_pkg import inner as inn
+from cov_mod_pkg.shapes import *
+from cov_mod_pkg.shapes import Box as B, make_point as mk
+from cov_mod_pkg.inner import LABEL
+from cov_mod_pkg.inner.rel import inner_point, nested_rel
+import collections.abc
+import typing as t
+
+
+def area(p: sh.Point, c: sh.Coord) -> int:
+    return p.x * p.y + c[0]
+
+
+def box_get(b: sh.Box[str]) -> str:
+    return b.get()
+
+
+def maybe(x: typing.Optional[int], y: t.Any) -> str:
+    return f"{x} {y}"
+
+
+def inner_box(b: sh.Box[float]) -> float:
+    return b.get()
+
+
+def lazy() -> float:
+    import cov_mod_pkg.inner.deep as d
+    from cov_mod_pkg.shapes import make_point
+
+    return math.sqrt(d.DEPTH * make_point(3, 0).x)
+
+
+def main() -> None:
+    p = mk(2, 3)
+    print(area(p, (1, 2)), p.coord())
+    print(box_get(B("s")), inner_box(sh.Box(2.5)))
+    print(maybe(None, 3), maybe(4, "q"))
+    print(greet("w"), VERSION, ORIGIN_NAME)
+    print(Point(1, 1), shapes.make_point(0, 1))
+    print(inner_point(), LABEL, inn.LABEL)
+    print(cov_mod_pkg.inner.deep.boxed(7).get(), cov_mod_pkg.shapes.ORIGIN_NAME)
+    print(lazy())
+    print(nested_rel())
+
+
+main()

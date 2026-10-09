@@ -1,0 +1,54 @@
+"""Generator send types, throw() with exception classes, and tuple[T, ...] in generics."""
+
+from typing import Any, Generator, Iterable
+
+
+def any_echo() -> Generator[int, Any, None]:
+    got: Any = None
+    while True:
+        got = yield 0 if got is None else len(str(got))
+
+
+def union_echo() -> Generator[str, int | str, None]:
+    reply = ""
+    while True:
+        got = yield reply
+        reply = f"int {got}" if isinstance(got, int) else f"str {got}"
+
+
+def words() -> Generator[int, str, None]:
+    total = 0
+    while True:
+        w = yield total
+        if w is not None:
+            total += len(w)
+
+
+def stopper() -> Generator[int, None, None]:
+    try:
+        yield 1
+    except KeyError:
+        yield 2
+
+
+def first_of[T](t: tuple[T, ...]) -> T:
+    return t[0]
+
+
+def byte_sum(xs: Iterable[int]) -> int:
+    return sum(xs)
+
+
+def widen(t: tuple[int, ...]) -> tuple[Any, ...]:
+    return t
+
+
+a = any_echo()
+print(next(a), a.send("hello"), a.send([1, 2]))
+u = union_echo()
+print(repr(next(u)), u.send(3), u.send("x"))
+w = words()
+print(next(w), w.send("abc"), w.send("de"), next(w))
+s = stopper()
+print(next(s), s.throw(KeyError))
+print(first_of((5, 6)), first_of(("a",)), byte_sum(b"\x01\x02"), widen((1, 2)))

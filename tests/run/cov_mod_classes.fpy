@@ -1,0 +1,218 @@
+import dataclasses
+from dataclasses import dataclass
+from enum import Enum, IntEnum, auto
+from typing import Callable, Iterable, Iterator, Protocol
+
+
+class Color(Enum):
+    RED = 1
+    GREEN = auto()
+    BLUE = auto()
+
+
+class Temp(IntEnum):
+    COLD = -5
+    WARM = auto()
+    HOT = 30
+
+
+class Base:
+    kind = "base"
+    count = 0
+
+    def __init__(self, n: int) -> None:
+        self.n = n
+
+
+class Child(Base):
+    def __init__(self, n: int, label: str) -> None:
+        super().__init__(n)
+        self.label = label
+
+
+class Inferred:
+    def __init__(self, a: int, name: str, flag: bool) -> None:
+        self.a = a
+        self.f = 1.5
+        self.b = True
+        self.s = "lit"
+        self.fs = f"x{a}"
+        self.neg = -3
+        self.negf = -2.5
+        self.conv = str(a)
+        self.ln = len(name)
+        self.fl = float(a)
+        self.iv = int("7")
+        self.child = Child(a, name)
+        self.empty = Empty()
+        if flag:
+            self.extra = 1
+        else:
+            self.extra = 2
+        while self.extra > 100:
+            self.loopv = 0
+        for _ in range(1):
+            self.forv = 4
+        try:
+            self.tryv = 1
+        except ValueError:
+            self.exv = 2
+        else:
+            self.elsev = 3
+        finally:
+            self.finv = 5
+        self.annv: list[str] = []
+        self.annv.append(name)
+
+
+class Empty:
+    pass
+
+
+@dataclass
+class Bag:
+    items: list[int]
+    tags: set[str]
+    meta: dict[str, float]
+    pair: tuple[int, str]
+    maybe: int | None
+    either: int | str
+    fn: Callable[[int], int]
+    cls: type[Base]
+    box: "Box[int]"
+
+
+class Box[T]:
+    value: T
+
+    def __init__(self, value: T) -> None:
+        self.value = value
+
+    def get(self) -> T:
+        return self.value
+
+
+@dataclass()
+class Nothing:
+    pass
+
+
+@dataclasses.dataclass(order=True)
+class One:
+    v: int
+
+
+@dataclass(frozen=True)
+class Frozen:
+    a: int
+    b: str = "d"
+
+
+@dataclass(eq=True)
+class WithKw:
+    a: int
+
+
+@dataclass
+class Sub(One):
+    w: int = 0
+
+
+class Plain(One):
+    pass
+
+
+class Shape(Protocol):
+    def area(self) -> float:
+        ...
+
+
+class Sq:
+    def __init__(self, s: float) -> None:
+        self.s = s
+
+    def area(self) -> float:
+        return self.s * self.s
+
+
+def total_area(shapes: list[Shape]) -> float:
+    return sum(s.area() for s in shapes)
+
+
+class Counter:
+    limit: int = 3
+
+    def __init__(self) -> None:
+        self.i = 0
+
+    def __iter__(self) -> Iterator[int]:
+        while self.i < self.limit:
+            yield self.i
+            self.i += 1
+
+
+def consume(it: Iterable[int]) -> int:
+    return sum(it)
+
+
+class Ctx:
+    def __enter__(self) -> "Ctx":
+        return self
+
+    def __exit__(self, a: object, b: object, c: object) -> bool:
+        return False
+
+
+class Attrs:
+    w: int = 0
+    m: int = 0
+    h: int = 0
+    p: int = 0
+    q: str = ""
+    shared: int = 9
+
+    def __init__(self, k: int) -> None:
+        with Ctx():
+            self.w = 1
+            self.inw = 2
+        match k:
+            case 1:
+                self.m = 10
+            case _:
+                self.m = 20
+        try:
+            int("x")
+        except ValueError:
+            self.h = 3
+        self.p, self.q = 4, "q"
+
+
+def main() -> None:
+    at = Attrs(1)
+    print(at.w, at.inw, at.m, at.h, at.p, at.q, Attrs.shared)
+    print(Color.RED.value, Color.GREEN.value, Color.BLUE.name)
+    print(Temp.COLD.value, Temp.WARM.value, Temp.HOT.value)
+    c = Child(3, "x")
+    print(c.n, c.label, Base.kind, Child.kind)
+    Base.count = 2
+    print(Base.count)
+    i = Inferred(4, "nm", True)
+    print(i.a, i.f, i.b, i.s, i.fs, i.neg, i.negf, i.conv, i.ln, i.fl, i.iv)
+    print(i.child.label, i.extra, i.forv, i.tryv, i.elsev, i.finv, i.annv)
+    bag = Bag([1], {"t"}, {"k": 0.5}, (1, "a"), None, "e", lambda x: x + 1, Base, Box(5))
+    print(bag.items, bag.tags, bag.meta, bag.pair, bag.maybe, bag.either, bag.fn(2), bag.box.get())
+    print(bag.cls(1).n)
+    print(Nothing() == Nothing(), repr(Nothing()))
+    print(One(1) < One(2), One(3) < One(2), One(2))
+    fz = Frozen(1)
+    print(fz, hash(fz) == hash(Frozen(1)), fz == Frozen(1, "d"))
+    print(WithKw(2))
+    s = Sub(1, 2)
+    print(s.v, s.w)
+    print(Plain(5).v)
+    print(total_area([Sq(2.0), Sq(3.0)]))
+    print(list(Counter()))
+    print(consume(Counter()))
+
+
+main()

@@ -1,0 +1,100 @@
+# fpython stdlib: itertools (typed subset; combinatoric iterators yield lists)
+from typing import Iterator
+
+
+def count(start: int = 0, step: int = 1) -> Iterator[int]:
+    n = start
+    while True:
+        yield n
+        n += step
+
+
+def repeat[T](obj: T, times: int) -> Iterator[T]:
+    for _ in range(times):
+        yield obj
+
+
+def cycle[T](items: list[T]) -> Iterator[T]:
+    if not items:
+        return
+    while True:
+        for x in items:
+            yield x
+
+
+def chain[T](a: list[T], b: list[T]) -> Iterator[T]:
+    for x in a:
+        yield x
+    for x in b:
+        yield x
+
+
+def islice[T](it: Iterator[T], stop: int) -> Iterator[T]:
+    n = 0
+    for x in it:
+        if n >= stop:
+            return
+        yield x
+        n += 1
+
+
+def accumulate(xs: list[int]) -> Iterator[int]:
+    total = 0
+    for x in xs:
+        total += x
+        yield total
+
+
+def pairwise[T](xs: list[T]) -> Iterator[tuple[T, T]]:
+    for i in range(len(xs) - 1):
+        yield (xs[i], xs[i + 1])
+
+
+def product[A, B](a: list[A], b: list[B]) -> Iterator[tuple[A, B]]:
+    for x in a:
+        for y in b:
+            yield (x, y)
+
+
+def combinations[T](pool: list[T], r: int) -> Iterator[list[T]]:
+    n = len(pool)
+    if r > n:
+        return
+    indices = list(range(r))
+    yield [pool[i] for i in indices]
+    while True:
+        i = r - 1
+        while i >= 0 and indices[i] == i + n - r:
+            i -= 1
+        if i < 0:
+            return
+        indices[i] += 1
+        for j in range(i + 1, r):
+            indices[j] = indices[j - 1] + 1
+        yield [pool[k] for k in indices]
+
+
+def permutations[T](pool: list[T], r: int = -1) -> Iterator[list[T]]:
+    n = len(pool)
+    if r < 0:
+        r = n
+    if r > n:
+        return
+    indices = list(range(n))
+    cycles = list(range(n, n - r, -1))
+    yield [pool[i] for i in indices[:r]]
+    while n:
+        i = r - 1
+        while i >= 0:
+            cycles[i] -= 1
+            if cycles[i] == 0:
+                indices[i:] = indices[i + 1 :] + indices[i : i + 1]
+                cycles[i] = n - i
+            else:
+                j = cycles[i]
+                indices[i], indices[-j] = indices[-j], indices[i]
+                yield [pool[k] for k in indices[:r]]
+                break
+            i -= 1
+        if i < 0:
+            return

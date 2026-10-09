@@ -1,0 +1,3 @@
+# expect: heterogeneous tuples must be indexed with an integer literal
+def f(t: tuple[int, str], i: int) -> None:
+    print(t[i])

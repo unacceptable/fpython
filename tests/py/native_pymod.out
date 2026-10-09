@@ -1,0 +1,24 @@
+49 hi
+{'mean': 2.5, 'std': 1.12, 'n': 4}
+{'mean': 3.0, 'std': 0.5, 'n': 2}
+[('the', 3), ('cat', 1), ('and', 1)]
+0.25 error: division by zero
+16
+Square('square') square with 4 sides 9 1
+['fizzbuzz', 'fizz', 'buzz', 'fizz', 'fizz', 'buzz', 'fizz', 'fizzbuzz', 'done']
+(1, [2, 3], 4, 6)
+({'ab': 2, 'c': 1}, ['a', 'c'])
+hello
+caught: empty
+['divs', 'square']
+True
+[5, 4, 3, 2, 1]
+10 6 5
+[1, 2, 3, 4, 'a', 'b']
+165 [1, 9]
+9
+1
+True
+[1, None, 3]
+(33, [3, 7], ['enter', 'exit ok', 'enter', 'exit KeyError'])
+True

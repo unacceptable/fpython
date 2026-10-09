@@ -1,0 +1,34 @@
+import boto3
+from botocore.stub import Stubber
+from typing import Any
+
+
+def bucket_names(client: Any) -> list[str]:
+    resp = client.list_buckets()
+    return [b["Name"] for b in resp["Buckets"]]
+
+
+def main() -> None:
+    session = boto3.session.Session(
+        aws_access_key_id="test",
+        aws_secret_access_key="test",
+        region_name="us-east-1",
+    )
+    s3 = session.client("s3")
+    print("service:", s3.meta.service_model.service_name)
+    stub = Stubber(s3)
+    stub.add_response(
+        "list_buckets",
+        {"Buckets": [{"Name": "alpha"}, {"Name": "beta"}], "Owner": {"ID": "x"}},
+    )
+    stub.add_client_error("get_object", service_error_code="NoSuchKey", http_status_code=404)
+    with stub:
+        print("buckets:", bucket_names(s3))
+        try:
+            s3.get_object(Bucket="alpha", Key="missing")
+        except s3.exceptions.NoSuchKey as e:
+            print("caught:", type(e).__name__)
+    print("regions>5:", len(session.get_available_regions("s3")) > 5)
+
+
+main()

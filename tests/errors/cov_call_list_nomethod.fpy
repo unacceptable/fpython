@@ -1,0 +1,2 @@
+# expect: 'list' object has no method 'zap'
+print([1].zap())

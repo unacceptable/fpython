@@ -1,0 +1,8 @@
+# expect: Box expects 1 type arguments, got 2
+class Box[T]:
+    def __init__(self, v: T) -> None:
+        self.v = v
+
+
+def f(b: Box[int, str]) -> int:
+    return 0

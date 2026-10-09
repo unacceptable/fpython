@@ -1,0 +1,6 @@
+# expect: closures cannot capture comprehension variable
+from typing import Callable
+
+
+def f() -> list[Callable[[], int]]:
+    return [lambda: i for i in range(3)]

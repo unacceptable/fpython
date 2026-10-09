@@ -1,0 +1,3 @@
+# expect: needs a type annotation
+def f(x) -> int:
+    return 1

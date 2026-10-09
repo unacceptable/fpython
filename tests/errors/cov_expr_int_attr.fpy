@@ -1,0 +1,2 @@
+# expect: has no attribute 'foo' (methods must be called)
+x = (5).foo

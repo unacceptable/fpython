@@ -1,0 +1,16 @@
+# fpython stdlib: string constants
+ascii_lowercase: str = "abcdefghijklmnopqrstuvwxyz"
+ascii_uppercase: str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+ascii_letters: str = ascii_lowercase + ascii_uppercase
+digits: str = "0123456789"
+hexdigits: str = "0123456789abcdefABCDEF"
+octdigits: str = "01234567"
+punctuation: str = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
+whitespace: str = " \t\n\r\x0b\x0c"
+printable: str = digits + ascii_letters + punctuation + whitespace
+
+
+def capwords(s: str, sep: str | None = None) -> str:
+    if sep is None:
+        return " ".join([w.capitalize() for w in s.split()])
+    return sep.join([w.capitalize() for w in s.split(sep)])

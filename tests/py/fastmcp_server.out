@@ -1,0 +1,3 @@
+['add', 'word_stats']
+42
+{'words': 4, 'chars': 20}

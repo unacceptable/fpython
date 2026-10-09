@@ -1,0 +1,14 @@
+<circle(1.5)>
+Matrix(2x2) 4 3.5 True False [0.0, 7.0, -2.0, 0.0] 2.5
+[3, 2, 1] [2, 1]
+15 True False
+10 0 2 2
+first True 1
+Level.LOW 2 True LOW
+['cat says ...', 'rex says woof', 'bit says woof!']
+6 14
+none int 42 str HEY
+9.0 12.0 -1.0 -1.0
+42 abab [1, 1]
+['int', 'str', 'float', 'NoneType', 'list']
+6 True True

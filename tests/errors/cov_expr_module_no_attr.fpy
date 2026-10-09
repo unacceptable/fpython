@@ -1,0 +1,4 @@
+# expect: module 'math' has no attribute 'nope'
+import math
+
+x = math.nope

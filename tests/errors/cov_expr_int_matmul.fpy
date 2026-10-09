@@ -1,0 +1,2 @@
+# expect: unsupported operand types for @: int
+x = 1 @ 2

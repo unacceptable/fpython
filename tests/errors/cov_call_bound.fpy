@@ -1,0 +1,10 @@
+# expect: does not satisfy bound
+class Base:
+    pass
+
+
+def f[T: Base](x: T) -> T:
+    return x
+
+
+f(3)

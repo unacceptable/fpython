@@ -1,0 +1,6 @@
+# expect: unexpected keyword argument
+def f(a: int) -> int:
+    return a
+
+
+print(f(b=1))

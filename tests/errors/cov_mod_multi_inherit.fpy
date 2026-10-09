@@ -1,0 +1,14 @@
+# expect: multiple inheritance of classes with state is not supported
+class A:
+    pass
+
+
+class B:
+    pass
+
+
+class C(A, B):
+    pass
+
+
+print(C())

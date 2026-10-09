@@ -1,0 +1,185 @@
+from typing import Callable, Iterator
+from enum import Enum
+
+
+class Color(Enum):
+    RED = 1
+    GREEN = 2
+    BLUE = 3
+
+
+class ParseError(ValueError):
+    pass
+
+
+def parse_int(s: str) -> int:
+    try:
+        return int(s)
+    except ValueError:
+        raise ParseError(f"bad int: {s!r}")
+
+
+def safe_div(a: int, b: int) -> float | None:
+    try:
+        return a / b
+    except ZeroDivisionError as e:
+        print("caught:", e)
+        return None
+    finally:
+        print("finally runs")
+
+
+def gen_squares(n: int) -> Iterator[int]:
+    for i in range(n):
+        yield i * i
+
+
+def fib_gen() -> Iterator[int]:
+    a, b = 0, 1
+    while True:
+        yield a
+        a, b = b, a + b
+
+
+def make_counter() -> Callable[[], int]:
+    count = 0
+
+    def inc() -> int:
+        nonlocal count
+        count += 1
+        return count
+
+    return inc
+
+
+def apply[T](f: Callable[[T], T], x: T, times: int) -> T:
+    for _ in range(times):
+        x = f(x)
+    return x
+
+
+def first[T](xs: list[T]) -> T | None:
+    return xs[0] if xs else None
+
+
+def describe(v: int | str | list[int]) -> str:
+    match v:
+        case int():
+            return f"int {v}"
+        case str():
+            return f"str {v}"
+        case _:
+            return "list"
+
+
+def classify(p: tuple[int, int]) -> str:
+    match p:
+        case [0, 0]:
+            return "origin"
+        case [0, y]:
+            return f"y-axis {y}"
+        case [x, 0]:
+            return f"x-axis {x}"
+        case [x, y] if x == y:
+            return "diagonal"
+        case _:
+            return "other"
+
+
+class Resource:
+    name: str
+
+    def __init__(self, name: str) -> None:
+        self.name = name
+
+    def __enter__(self) -> "Resource":
+        print("enter", self.name)
+        return self
+
+    def __exit__(self, a: object, b: object, c: object) -> None:
+        print("exit", self.name)
+
+
+def main() -> None:
+    print(parse_int("12"))
+    try:
+        parse_int("x1")
+    except ParseError as e:
+        print("ParseError:", e)
+    except ValueError:
+        print("wrong handler")
+    print(safe_div(1, 2), safe_div(1, 0))
+    try:
+        [1, 2][5]
+    except IndexError as e:
+        print("IndexError:", e)
+    try:
+        d: dict[str, int] = {}
+        d["missing"]
+    except KeyError as e:
+        print("KeyError:", e)
+    try:
+        raise RuntimeError("boom")
+    except (TypeError, RuntimeError) as e:
+        print(type(e).__name__, e)
+    for i in range(5):
+        try:
+            if i == 1:
+                continue
+            if i == 3:
+                break
+            print("loop", i)
+        finally:
+            print("cleanup", i)
+    print(list(gen_squares(5)), sum(gen_squares(4)))
+    fg = fib_gen()
+    print([next(fg) for _ in range(10)])
+    c = make_counter()
+    c()
+    c()
+    print(c())
+    print(apply(lambda x: x * 2, 1, 10), apply(lambda s: s + "!", "hi", 3))
+    print(first([3, 4]), first([9]))
+    nums: list[int] = []
+    print(first(nums))
+    print(describe(5), describe("s"), describe([1]))
+    for p in [(0, 0), (0, 5), (3, 0), (2, 2), (1, 2)]:
+        print(classify(p), end=" ")
+    print()
+    with Resource("a") as r, Resource("b"):
+        print("inside", r.name)
+    print(
+        Color.RED,
+        Color.GREEN.name,
+        Color.BLUE.value,
+        Color.RED == Color.RED,
+        Color.RED == Color.BLUE,
+    )
+    maybe: str | None = None
+    for candidate in ["", "x"]:
+        if candidate:
+            maybe = candidate
+    if maybe is not None:
+        print("got", maybe.upper())
+    n = 0
+    while (n := n + 1) < 5:
+        pass
+    print("walrus", n)
+    total = 0
+    for i in range(10):
+        if i % 2:
+            continue
+        total += i
+    else:
+        print("for-else ran", total)
+    squares = map(lambda x: x * x, [1, 2, 3])
+    evens = filter(lambda x: x % 2 == 0, range(10))
+    print(list(squares), list(evens))
+    assert total == 20, "math is broken"
+    try:
+        assert total == 0, "expected failure"
+    except AssertionError as e:
+        print("assert:", e)
+
+
+main()

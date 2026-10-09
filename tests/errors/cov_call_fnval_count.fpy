@@ -1,0 +1,6 @@
+# expect: function value expects 1 arguments, got 2
+from typing import Callable
+
+
+def f(g: Callable[[int], int]) -> int:
+    return g(1, 2)

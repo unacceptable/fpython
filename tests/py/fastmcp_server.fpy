@@ -1,0 +1,30 @@
+import asyncio
+from fastmcp import FastMCP, Client
+
+mcp = FastMCP("fpython-tools")
+
+
+@mcp.tool
+def add(a: int, b: int) -> int:
+    """Add two integers (native fpython code)."""
+    return a + b
+
+
+@mcp.tool
+def word_stats(text: str) -> dict[str, int]:
+    """Count words and characters."""
+    words = text.split()
+    return {"words": len(words), "chars": len(text)}
+
+
+async def run_client() -> None:
+    async with Client(mcp) as client:
+        tools = await client.list_tools()
+        print(sorted([t.name for t in tools]))
+        r = await client.call_tool("add", {"a": 2, "b": 40})
+        print(r.data)
+        r2 = await client.call_tool("word_stats", {"text": "native tools for MCP"})
+        print(r2.data)
+
+
+asyncio.run(run_client())

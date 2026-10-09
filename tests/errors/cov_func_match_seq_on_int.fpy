@@ -1,0 +1,5 @@
+# expect: sequence patterns need a list or tuple subject
+def f(n: int) -> None:
+    match n:
+        case [a, b]:
+            print(a, b)

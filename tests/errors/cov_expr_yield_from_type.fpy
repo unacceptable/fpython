@@ -1,0 +1,6 @@
+# expect: yield from produces str, generator yields int
+from typing import Iterator
+
+
+def f() -> Iterator[int]:
+    yield from ["a"]

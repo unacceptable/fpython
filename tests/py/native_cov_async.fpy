@@ -1,0 +1,3 @@
+import pycov_async
+
+print(pycov_async.run_all())

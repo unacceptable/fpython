@@ -1,0 +1,8 @@
+# expect: unsupported del target
+class A:
+    def __init__(self) -> None:
+        self.x = 1
+
+
+a = A()
+del a.x

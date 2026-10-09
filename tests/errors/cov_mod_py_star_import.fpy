@@ -1,0 +1,4 @@
+# expect: is not supported for Python modules
+from fractions import *
+
+print(1)

@@ -1,0 +1,6 @@
+# expect: cannot assign to 'f': it names a function, class or module
+def f() -> int:
+    return 1
+
+
+f = 3

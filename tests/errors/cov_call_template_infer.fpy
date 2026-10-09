@@ -1,0 +1,7 @@
+# expect: cannot infer type parameter 'T' of Box
+class Box[T]:
+    def __init__(self) -> None:
+        self.items: list[T] = []
+
+
+b = Box()

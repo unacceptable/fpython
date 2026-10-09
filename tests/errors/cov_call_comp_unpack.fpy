@@ -1,0 +1,3 @@
+# expect: cannot unpack int
+xs = [1, 2]
+print(sum(a + b for a, b in xs))

@@ -1,0 +1,3 @@
+# expect: has no method 'append'
+def f(t: tuple[int, ...]) -> None:
+    t.append(1)

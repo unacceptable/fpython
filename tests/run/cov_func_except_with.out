@@ -1,0 +1,66 @@
+finally for 0
+ok 0
+finally for 1
+net code 404
+finally for 2
+disk or value: disk full
+finally for 3
+disk or value: bad value
+finally for 4
+key KeyError
+finally for 5
+generic RuntimeError
+finally for 6
+ok 60
+logging and re-raising
+re-raised 404
+outer: wrapped
+caught everything
+302
+loop finally 1
+loop finally 2
+loop finally 3
+3
+body
+cleanup
+inner finally
+outer caught 500
+handler raised: disk full
+enter a
+inside a
+exit a clean
+enter b
+exit b with error
+after suppressed
+enter c
+exit c with error
+got propagates
+enter d
+enter e
+two managers d e
+exit e clean
+exit d clean
+plain enter
+plain value 7
+plain exit
+plain enter
+plain exit
+plain did not suppress
+enter ret
+exit ret clean
+returned from with
+enter loop0
+exit loop0 clean
+enter loop1
+loop body 1
+exit loop1 clean
+enter loop2
+exit loop2 clean
+1 None
+return_in_try finally
+return_in_try finally
+5 -1
+gen cleanup
+[1, 2]
+[0, 1]
+raised class DiskError

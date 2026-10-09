@@ -1,0 +1,6 @@
+# expect: *rest needs a type annotation
+def f(a: int, *rest) -> int:
+    return a
+
+
+print(f(1))

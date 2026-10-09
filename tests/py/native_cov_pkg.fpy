@@ -1,0 +1,8 @@
+import pycov_pkg
+import pycov_pkg.core
+import pycov_pkg.sub.leaf
+from pycov_pkg.sub import leaf
+
+print(pycov_pkg.summary())
+print(pycov_pkg.core.helper(1))
+print(leaf.leaf_fn())

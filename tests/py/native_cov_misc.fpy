@@ -1,0 +1,5 @@
+import pycov_misc
+
+print(pycov_misc.run_part1())
+print(pycov_misc.run_part2())
+print(pycov_misc.run_part3())

@@ -1,0 +1,10 @@
+# expect: may be None; check `is not None` before accessing '.v'
+class A:
+    v: int
+
+    def __init__(self) -> None:
+        self.v = 0
+
+
+def f(a: A | None) -> int:
+    return a.v

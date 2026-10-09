@@ -1,0 +1,37 @@
+from typing import Any
+
+
+class P:
+    def __init__(self) -> None:
+        self.x = 3
+
+
+def main() -> None:
+    a: Any = 5
+    f: Any = 2.5
+    s: Any = "42"
+    xs: Any = [1, 2, 3]
+    print(int(a), float(f), int(s), float(a))
+    print(len(xs), sorted(xs), list(xs))
+    p: Any = P()
+    print(getattr(p, "x"), hasattr(p, "x"), hasattr(p, "y"), getattr(p, "y", 0))
+    setattr(p, "x", 10)
+    print(getattr(p, "x"))
+    name = "x"
+    q = P()
+    print(getattr(q, name), hasattr(q, name))
+    setattr(q, name, 4)
+    print(q.x)
+    print(getattr(q, "x"), hasattr(q, "x"), hasattr(q, "zz"))
+    setattr(q, "x", 11)
+    print(q.x)
+    v: int | str = 3
+    print(int(v), float(v))
+    print(sum(xs))
+    print(list(enumerate(xs)))
+    print(sum(1 for a in xs))
+    pairs: Any = [(1, 2), (3, 4)]
+    print(sum(a * b for a, b in pairs))
+
+
+main()

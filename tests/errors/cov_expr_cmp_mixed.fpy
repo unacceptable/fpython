@@ -1,0 +1,2 @@
+# expect: '<' not supported between
+x = "a" < 1

@@ -1,0 +1,6 @@
+# expect: **opts needs a type annotation
+def f(a: int, **opts) -> int:
+    return a
+
+
+print(f(1))

@@ -1,0 +1,2 @@
+# expect: type() is only supported for class instances
+print(type(5))

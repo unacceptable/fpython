@@ -1,0 +1,7 @@
+# expect: is captured before it is assigned
+def outer() -> int:
+    def inner() -> int:
+        return y
+
+    y = 2
+    return inner()

@@ -1,0 +1,2 @@
+# expect: 'dict' object has no method 'zap'
+print({1: 2}.zap())

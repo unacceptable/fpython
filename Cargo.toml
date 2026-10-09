@@ -1,0 +1,18 @@
+[package]
+name = "fpython"
+version = "0.1.0"
+edition = "2021"
+description = "fpython: a strictly typed, natively compiled Python 4.x-style language"
+license = "PSF-2.0"
+readme = "README.md"
+
+[[bin]]
+name = "fpython"
+path = "src/main.rs"
+
+[dependencies]
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1

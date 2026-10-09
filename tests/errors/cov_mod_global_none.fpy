@@ -1,0 +1,3 @@
+# expect: cannot infer the type of 'cur' from None
+cur = None
+print(cur)

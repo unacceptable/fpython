@@ -1,0 +1,4 @@
+# expect: unsupported comprehension target
+xs = [1, 2]
+ys = [0]
+print(sum(1 for ys[0] in xs))

@@ -1,0 +1,6 @@
+# expect: cannot assign
+def f() -> int:
+    return 1
+
+
+f() = 3

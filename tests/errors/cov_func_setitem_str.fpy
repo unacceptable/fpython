@@ -1,0 +1,3 @@
+# expect: 'str' does not support item assignment
+s = "abc"
+s[0] = "x"

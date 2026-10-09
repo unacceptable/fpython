@@ -1,0 +1,4 @@
+# expect: cannot import name 'nope' from 'math'
+from math import nope
+
+print(1)

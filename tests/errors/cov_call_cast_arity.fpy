@@ -1,0 +1,4 @@
+# expect: cast() takes a type and a value
+from typing import cast
+
+x = cast(int)

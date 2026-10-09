@@ -1,0 +1,2 @@
+# expect: unsupported operand for sets
+x = {1} + {2}

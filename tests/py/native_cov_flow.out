@@ -1,0 +1,25 @@
+'c.txt'
+'xml.dom'
+None
+'OrderedDict'
+2
+(True, False)
+[1, 2, 4, 5, 'while-else', 'for-else']
+[('key', "'k'"), ('val/type', 'ValueError'), ('val/type', 'TypeError'), 'index', 'bare', 'else']
+[0, 'f0', 'f1', 2, 'f2', 'f3', 'inner', 'outer']
+'try'
+'override'
+'reraised first'
+('ZeroDivisionError', True)
+(None, True)
+'ok'
+'assert: bad -1'
+'assert: '
+['unbound', False, ([2, 3, 4], {'b': 2}), 'double-del', 10, 'cell-deleted']
+(12, [1, 10, 1, 'free-unbound', 'bound'])
+['enter a', 'enter b', 'enter c', 'ab', 'exit c None', 'exit b None', 'exit a None', 'enter outer', 'enter inner', 'exit inner KeyError', 'exit outer KeyError', 'enter 0', 'exit 0 None', 'enter 1', 'exit 1 None']
+['enter r', 'exit r None']
+[0, 1, 2, 'handled', 3, [None, None], 'done', [None, None, 'done']]
+7
+7
+[0, 1, 2, 3, 4, 5, 'finally_return', ('closed', ('a', 'b', 'thrown x'))]

@@ -1,0 +1,8 @@
+import deeppkg
+from deeppkg.sub import helpers
+
+print(deeppkg.combine(3, 4), deeppkg.VERSION)
+print(helpers.unused_in_direct_mode())
+import _bisect
+
+print(_bisect.bisect_right([1, 3], 2))

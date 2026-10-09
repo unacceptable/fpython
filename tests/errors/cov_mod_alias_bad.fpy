@@ -1,0 +1,6 @@
+# expect: unknown type 'Undefined'
+type A = list[Undefined]
+
+
+def f(x: A) -> int:
+    return 0

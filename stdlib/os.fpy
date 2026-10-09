@@ -1,0 +1,81 @@
+# fpython stdlib: os
+from fpython import extern
+import os.path as path
+
+
+@extern("fpy_getenv")
+def _getenv(name: str, default: str | None) -> str | None:
+    ...
+
+
+@extern("fpy_environ")
+def _environ() -> dict[str, str]:
+    ...
+
+
+@extern("fpy_getcwd")
+def getcwd() -> str:
+    ...
+
+
+@extern("fpy_getpid")
+def getpid() -> int:
+    ...
+
+
+@extern("fpy_listdir")
+def listdir(p: str = ".") -> list[str]:
+    ...
+
+
+@extern("fpy_mkdir")
+def mkdir(p: str) -> None:
+    ...
+
+
+@extern("fpy_remove")
+def remove(p: str) -> None:
+    ...
+
+
+@extern("fpy_rmdir")
+def rmdir(p: str) -> None:
+    ...
+
+
+@extern("fpy_chdir")
+def chdir(p: str) -> None:
+    ...
+
+
+@extern("fpy_cpu_count")
+def cpu_count() -> int:
+    ...
+
+
+sep: str = "/"
+linesep: str = "\n"
+name: str = "posix"
+environ: dict[str, str] = _environ()
+
+
+def getenv(key: str, default: str | None = None) -> str | None:
+    return _getenv(key, default)
+
+
+def makedirs(p: str, exist_ok: bool = False) -> None:
+    parts = p.split("/")
+    cur = ""
+    for i, part in enumerate(parts):
+        if i == 0 and part == "":
+            cur = "/"
+            continue
+        cur = path.join(cur, part) if cur else part
+        if not path.exists(cur):
+            mkdir(cur)
+        elif i == len(parts) - 1 and not exist_ok:
+            raise FileExistsError(f"[Errno 17] File exists: '{p}'")
+
+
+def unlink(p: str) -> None:
+    remove(p)

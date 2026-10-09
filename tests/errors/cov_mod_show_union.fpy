@@ -1,0 +1,3 @@
+# expect: got int | str
+def f(a: int | str) -> int:
+    return a

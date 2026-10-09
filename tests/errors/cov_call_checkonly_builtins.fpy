@@ -1,0 +1,11 @@
+# expect: cannot convert float to bytes
+import sys
+from typing import Any
+
+print("to stderr", file=sys.stderr, flush=True)
+print(str(b"raw"))
+print(list(reversed(iter([1, 2, 3]))))
+it: Any = iter([1])
+print(next(it), next(it, 0))
+print(bytes(3), bytes([104, 105]))
+print(bytes(1.5))

@@ -1,0 +1,103 @@
+fpython is distributed under the same license as Python: the PSF License
+Agreement (SPDX: PSF-2.0), with "the fpython authors" as licensor.
+
+Portions of the fpython standard library and runtime reimplement interfaces
+and algorithms from CPython (for example heapq, bisect and itertools). Those
+portions are also covered by the Python Software Foundation's copyright and
+license, which follow the fpython license below.
+
+=============================================================================
+
+LICENSE AGREEMENT FOR FPYTHON
+-----------------------------
+
+1. This LICENSE AGREEMENT is between the fpython authors ("Licensor"), and
+   the Individual or Organization ("Licensee") accessing and otherwise using
+   this software ("fpython") in source or binary form and its associated
+   documentation.
+
+2. Subject to the terms and conditions of this License Agreement, Licensor
+   hereby grants Licensee a nonexclusive, royalty-free, world-wide license to
+   reproduce, analyze, test, perform and/or display publicly, prepare
+   derivative works, distribute, and otherwise use fpython alone or in any
+   derivative version, provided, however, that Licensor's License Agreement
+   and Licensor's notice of copyright, i.e., "Copyright (c) 2026 the fpython
+   authors; All Rights Reserved" are retained in fpython alone or in any
+   derivative version prepared by Licensee.
+
+3. In the event Licensee prepares a derivative work that is based on or
+   incorporates fpython or any part thereof, and wants to make the derivative
+   work available to others as provided herein, then Licensee hereby agrees
+   to include in any such work a brief summary of the changes made to
+   fpython.
+
+4. Licensor is making fpython available to Licensee on an "AS IS" basis.
+   LICENSOR MAKES NO REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED. BY WAY
+   OF EXAMPLE, BUT NOT LIMITATION, LICENSOR MAKES NO AND DISCLAIMS ANY
+   REPRESENTATION OR WARRANTY OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+   PURPOSE OR THAT THE USE OF FPYTHON WILL NOT INFRINGE ANY THIRD PARTY
+   RIGHTS.
+
+5. LICENSOR SHALL NOT BE LIABLE TO LICENSEE OR ANY OTHER USERS OF FPYTHON FOR
+   ANY INCIDENTAL, SPECIAL, OR CONSEQUENTIAL DAMAGES OR LOSS AS A RESULT OF
+   MODIFYING, DISTRIBUTING, OR OTHERWISE USING FPYTHON, OR ANY DERIVATIVE
+   THEREOF, EVEN IF ADVISED OF THE POSSIBILITY THEREOF.
+
+6. This License Agreement will automatically terminate upon a material breach
+   of its terms and conditions.
+
+7. Nothing in this License Agreement shall be deemed to create any
+   relationship of agency, partnership, or joint venture between Licensor and
+   Licensee. This License Agreement does not grant permission to use
+   Licensor's trademarks or trade name in a trademark sense to endorse or
+   promote products or services of Licensee, or any third party.
+
+8. By copying, installing or otherwise using fpython, Licensee agrees to be
+   bound by the terms and conditions of this License Agreement.
+
+=============================================================================
+
+PSF LICENSE AGREEMENT FOR PYTHON (applies to portions derived from CPython)
+---------------------------------------------------------------------------
+
+1. This LICENSE AGREEMENT is between the Python Software Foundation ("PSF"),
+   and the Individual or Organization ("Licensee") accessing and otherwise
+   using this software ("Python") in source or binary form and its associated
+   documentation.
+
+2. Subject to the terms and conditions of this License Agreement, PSF hereby
+   grants Licensee a nonexclusive, royalty-free, world-wide license to
+   reproduce, analyze, test, perform and/or display publicly, prepare
+   derivative works, distribute, and otherwise use Python alone or in any
+   derivative version, provided, however, that PSF's License Agreement and
+   PSF's notice of copyright, i.e., "Copyright (c) 2001 Python Software
+   Foundation; All Rights Reserved" are retained in Python alone or in any
+   derivative version prepared by Licensee.
+
+3. In the event Licensee prepares a derivative work that is based on or
+   incorporates Python or any part thereof, and wants to make the derivative
+   work available to others as provided herein, then Licensee hereby agrees
+   to include in any such work a brief summary of the changes made to Python.
+
+4. PSF is making Python available to Licensee on an "AS IS" basis. PSF MAKES
+   NO REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED. BY WAY OF EXAMPLE,
+   BUT NOT LIMITATION, PSF MAKES NO AND DISCLAIMS ANY REPRESENTATION OR
+   WARRANTY OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR PURPOSE OR THAT
+   THE USE OF PYTHON WILL NOT INFRINGE ANY THIRD PARTY RIGHTS.
+
+5. PSF SHALL NOT BE LIABLE TO LICENSEE OR ANY OTHER USERS OF PYTHON FOR ANY
+   INCIDENTAL, SPECIAL, OR CONSEQUENTIAL DAMAGES OR LOSS AS A RESULT OF
+   MODIFYING, DISTRIBUTING, OR OTHERWISE USING PYTHON, OR ANY DERIVATIVE
+   THEREOF, EVEN IF ADVISED OF THE POSSIBILITY THEREOF.
+
+6. This License Agreement will automatically terminate upon a material breach
+   of its terms and conditions.
+
+7. Nothing in this License Agreement shall be deemed to create any
+   relationship of agency, partnership, or joint venture between PSF and
+   Licensee. This License Agreement does not grant permission to use PSF
+   trademarks or trade name in a trademark sense to endorse or promote
+   products or services of Licensee, or any third party.
+
+8. By copying, installing or otherwise using Python, Licensee agrees to be
+   bound by the terms and conditions of this License Agreement.

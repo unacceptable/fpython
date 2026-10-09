@@ -1,0 +1,6 @@
+# expect: *args splat requires a tuple or a function with *args
+def f(a: int) -> int:
+    return a
+
+
+f(*[1])

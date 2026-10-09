@@ -1,0 +1,14 @@
+3 7 11 15
+a-b-c x-y
+child none
+2
+3
+1 w
+sink 5
+1.5 any 1.5 2.5
+(1, 'a')
+3 [1, 2] {'k': 1}
+[1, 2] (1, 2) none child
+6 ['p', 'q'] None
+base
+[1, 'a', 2.5, None, True]

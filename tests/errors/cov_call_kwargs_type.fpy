@@ -1,0 +1,6 @@
+# expect: expected int, got str
+def f(**kw: int) -> int:
+    return len(kw)
+
+
+f(a="s")

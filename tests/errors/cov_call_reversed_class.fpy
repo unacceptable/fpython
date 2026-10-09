@@ -1,0 +1,6 @@
+# expect: object is not reversible
+class A:
+    pass
+
+
+print(reversed(A()))

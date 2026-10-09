@@ -1,0 +1,4 @@
+[3, 4, 5] KeyError('a')
+(3, 6, 3)
+('A.B', 'A.m', ('outer.<locals>.inner', 'outer.<locals>.<lambda>'))
+frozenset({1, 2}) 2 True [1, 2]

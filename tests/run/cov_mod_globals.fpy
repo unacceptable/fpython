@@ -1,0 +1,72 @@
+class Res:
+    def __init__(self, name: str) -> None:
+        self.name = name
+
+    def __enter__(self) -> "Res":
+        return self
+
+    def __exit__(self, a: object, b: object, c: object) -> bool:
+        return False
+
+
+a, b = 1, "two"
+[c, d] = [3, 4]
+e, (f, g) = 5.5, (True, "g")
+lst = [10, 20]
+h, k = lst
+total = 0
+for idx, val in enumerate(lst):
+    total += val
+    inner_last = idx
+else:
+    loop_done = True
+
+if total > 5:
+    big = "yes"
+else:
+    big = "no"
+
+n = 0
+while n < 3:
+    n += 1
+    wv = n * 2
+
+try:
+    tv = int("12")
+except ValueError as err:
+    ev = 1
+except (KeyError, IndexError) as err2:
+    ev2 = 2
+except:
+    ev3 = 3
+else:
+    tel = "else"
+finally:
+    tfin = "fin"
+
+with Res("ctx") as r:
+    inside = r.name + "!"
+
+with Res("a") as (r2):
+    pass
+
+match total:
+    case 30:
+        matched = "thirty"
+    case _:
+        matched = "other"
+
+x = y = 7
+nums: list[int] = []
+nums.append(1)
+maybe: str | None = None
+
+
+def report() -> None:
+    print(a, b, c, d, e, f, g, h, k)
+    print(total, inner_last, loop_done, big, n, wv)
+    print(tv, tel, tfin)
+    print(r.name, inside, r2.name, matched, x, y, nums, maybe)
+
+
+report()

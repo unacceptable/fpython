@@ -1,0 +1,6 @@
+# expect: generic function 'ident' cannot be used as a value
+def ident[T](x: T) -> T:
+    return x
+
+
+f = ident

@@ -1,0 +1,6 @@
+# expect: expected tuple[int, ...], got tuple[str]
+def f(t: tuple[int, ...]) -> int:
+    return len(t)
+
+
+f(("a",))

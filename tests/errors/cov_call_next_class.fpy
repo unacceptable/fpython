@@ -1,0 +1,6 @@
+# expect: object is not an iterator
+class A:
+    pass
+
+
+print(next(A()))

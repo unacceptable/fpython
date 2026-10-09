@@ -1,0 +1,11 @@
+# expect: decorator of type
+from typing import Callable
+
+
+def deco(f: Callable[[], int]) -> Callable[[], int]:
+    return f
+
+
+@deco
+def g() -> int:
+    return 1

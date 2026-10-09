@@ -1,0 +1,3 @@
+# expect: range expects 1 to 3 arguments
+for i in range():
+    pass

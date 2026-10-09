@@ -1,0 +1,2 @@
+# expect: printf-style
+x = "%d" % 5

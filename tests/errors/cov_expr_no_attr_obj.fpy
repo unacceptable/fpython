@@ -1,0 +1,6 @@
+# expect: 'A' object has no attribute 'zz'
+class A:
+    pass
+
+
+x = A().zz

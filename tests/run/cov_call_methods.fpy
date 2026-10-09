@@ -1,0 +1,118 @@
+from typing import Iterator
+
+
+def gen(n: int) -> Iterator[int]:
+    for i in range(n):
+        yield i * i
+
+
+def containers() -> None:
+    xs: list[int] = list()
+    xs.append(3)
+    xs.extend(gen(3))
+    xs.extend([9, 9])
+    print(xs)
+    xs.sort(reverse=True)
+    print(xs)
+    xs.sort(reverse=False, key=lambda v: -v)
+    print(xs)
+    s: set[int] = set()
+    s.add(4)
+    s.update([5, 6])
+    s.intersection_update({4, 5, 7})
+    print(sorted(s))
+    s.difference_update([4])
+    print(sorted(s))
+    s2 = s.copy()
+    s2.add(1)
+    print(sorted(s2), sorted(s))
+    s2.clear()
+    print(len(s2))
+    sq = set(x * x for x in range(4))
+    print(sorted(sq))
+    fs = frozenset([1, 2, 2])
+    print(len(fs))
+    d: dict[str, int] = dict()
+    d["a"] = 1
+    d2 = dict(d)
+    d2["b"] = 2
+    print(d, d2)
+    d3 = dict([("x", 1), ("y", 2)])
+    print(d3)
+    d4 = dict(zip(["k", "l"], [10, 11]))
+    print(d4)
+    d5 = dict(p=1, q=2)
+    print(d5)
+    print(list("abc"), list(gen(4)), list(range(3)))
+    t = (3, 1, 3, 2)
+    print(t.count(3), t.index(2))
+
+
+def strings() -> None:
+    s = "Hello World"
+    print(s.find("o"), s.rfind("o"), s.count("l"), s.index("W"), s.rindex("o"))
+    print(s.startswith(("He", "x")), s.endswith(("ld",)), s.startswith("llo", 2))
+    print(s.split(), s.split(None), s.split("o", 1), s.rsplit(maxsplit=1), s.split(sep="l"))
+    print("a\nb\n".splitlines(), "a\nb\n".splitlines(True), "x\ny".splitlines(keepends=False))
+    print(s.casefold(), s.swapcase(), s.title(), s.capitalize())
+    print(s.center(15, "*"), s.ljust(13, "."), s.rjust(13), "7".zfill(3))
+    print(s.partition(" "), s.rpartition("o"))
+    print(s.removeprefix("Hel"), s.removesuffix("rld"), s.replace("l", "L", 2))
+    print("a\tb".expandtabs(4), "a\tb".expandtabs())
+    print("123".isnumeric(), "12".isdecimal(), "Ab".istitle(), "ab".isascii(), "a b".isprintable())
+    print("  x ".strip(), "xxyxx".strip("x"), "--a".lstrip("-"), "b--".rstrip("-"))
+    print(",".join(str(i) for i in range(3)))
+    print(s.encode())
+
+
+def numbers() -> None:
+    print((10).bit_length(), (7).bit_count(), (0).bit_length(), (-5).bit_length())
+    print((2.0).is_integer(), (2.5).is_integer(), (0.1).hex())
+    b = b"\x01\xff"
+    print(b.hex(), b"ok".decode())
+
+
+def iteration() -> None:
+    it = iter([1, 2, 3])
+    print(next(it), next(it), next(it), next(it, -1))
+    g = gen(2)
+    print(g.__next__(), next(g))
+    print(next(iter("ab")))
+    e = enumerate(["a", "b"], start=1)
+    print(list(e))
+    print(list(enumerate("xy", 5)))
+    print(min([3, 1, 2]), max([3, 1, 2]), min(4, 2, 8), max(1.5, 2.0, 0.5))
+    none: list[int] = []
+    print(min(none, default=7), max(gen(0), default=-1))
+    print(min(["bb", "a", "ccc"], key=len), max(["bb", "a", "ccc"], key=lambda w: len(w)))
+    print(max(x * 2 for x in [3, 9, 1]), min(("b", 2), ("a", 9)))
+    print(sorted(["b", "A", "c"], key=str.lower) if False else sorted(["b", "a"], reverse=True))
+    print(sorted(gen(4), reverse=True), sorted(x % 3 for x in range(6)))
+    print(any(x > 2 for x in [1, 3]), all([True, False]), any([]), all([]))
+    print(list(map(lambda x: x + 1, [1, 2])), list(filter(None, [0, 1, 2, 0])))
+    print(list(filter(lambda x: x % 2 == 0, range(6))))
+    print(list(reversed("abc")), list(reversed([1, 2])))
+    print(list(zip([1, 2, 3], "ab")))
+    print(hash(5) == hash(5), id(3) == id(3))
+    print(divmod(9, 4), round(3.14159, ndigits=3))
+    ws = ["a", "bb", "ccc"]
+    print(sum(i * len(w) for i, w in enumerate(ws)))
+    print(max(len(a) + b for a, b in zip(ws, [5, 1, 0])))
+    rows = [[1, 2], [3, 4]]
+    print(sum(a * b for [a, b] in rows))
+    print(sum(x for x in range(5) if x % 2 == 1))
+    try:
+        name = input("name? ")
+        print(name)
+    except EOFError:
+        print("no input")
+    try:
+        print(input())
+    except EOFError:
+        print("no input again")
+
+
+containers()
+strings()
+numbers()
+iteration()

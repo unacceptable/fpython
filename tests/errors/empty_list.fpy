@@ -1,0 +1,4 @@
+# expect: cannot infer the type of 'xs' from an empty literal
+def f() -> None:
+    xs = []
+    print(xs)

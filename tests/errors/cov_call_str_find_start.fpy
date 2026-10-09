@@ -1,0 +1,2 @@
+# expect: with start/end is not supported; slice first
+print("abc".find("b", 1))

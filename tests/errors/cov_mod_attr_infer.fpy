@@ -1,0 +1,7 @@
+# expect: cannot infer the type of attribute 'items'
+class A:
+    def __init__(self) -> None:
+        self.items = []
+
+
+print(A().items)

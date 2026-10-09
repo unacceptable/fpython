@@ -1,0 +1,2 @@
+# expect: 'str' object has no method 'zap'
+print("a".zap())

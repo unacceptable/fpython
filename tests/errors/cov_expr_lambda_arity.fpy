@@ -1,0 +1,4 @@
+# expect: lambda takes 2 parameters but 1 are expected
+from typing import Callable
+
+f: Callable[[int], int] = lambda a, b: a

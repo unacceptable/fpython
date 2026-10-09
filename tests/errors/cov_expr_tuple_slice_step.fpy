@@ -1,0 +1,3 @@
+# expect: tuple slices need literal bounds
+def f(t: tuple[int, str]) -> None:
+    print(t[::2])

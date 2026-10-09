@@ -1,0 +1,2 @@
+# expect: no module named
+import definitely_not_a_module_xyz

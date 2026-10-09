@@ -1,0 +1,40 @@
+-- str methods
+hello, world HELLO, WORLD hello, world hELLO, wORLD Hello, World Hello, world
+['Hello,', 'World'] ['Hello', 'World'] ['Hell', ', World'] ['Hello, W', 'rld'] ['a b', 'c']
+['x', 'y', 'z'] ['x\n', 'y\n'] 4 8 7 8 3
+True True True True
+pad pad pad pad
+0007 -007 ---ab-- ab...    ab a       b
+True True True True True True True True True True
+a+b+c a+b-c xy a-b-c
+('key', '=', 'val') ('a=b', '=', 'c') ('nope', '', '') x x
+b'h\xc3\xa9llo' bytes cba bd c ab
+233 é -0x2a 0o10 0b1010 ff 3.14   s
+-- list methods
+[9, 1, 2, 5] 1 1 4 3 [9, 1, 2, 5]
+[5, 2, 1] [5, 2, 1] [5, 2, 1]
+[5, 2, 1]
+[] 0
+[20, 30, 40] [20, 30, 40, 20, 30, 40] [0, 20, 30, 40] True True
+['fig', 'pear', 'banana'] fig pear ['banana', 'fig', 'pear']
+-- dict methods
+1 None 0 4 1 -1
+['b', 'c', 'd'] [2, 3, 4] [('b', 2), ('c', 3), ('d', 4)] True 3
+('d', 4) {'b': 2, 'c': 3}
+{} {'x': 1, 'y': 2} {'a': 1, 'b': 2} {'p': 1, 'q': 2}
+[('i', 4), ('m', 1), ('p', 2), ('s', 4)]
+[(1, ['m']), (2, ['p']), (4, ['i', 's'])]
+-- set methods
+[1, 2, 3, 4, 5] [3] [1, 2, 5] [1, 2, 4, 5]
+True True True [1, 2, 5] True
+[5, 6] 2 [0, 1, 4, 9, 16]
+-- numbers
+3 2.5 7.6 -2 (-3, 3) 1024 24 0.5
+255 5 42 1.5 True 8 3 True
+7 1.0 4.0 5050 False True 3 -4 -2 1.4142135623730951
+3 15 5 -8 32 32 2 1 3.0
+-- functions as values
+5 6
+[1, 4, 9] [4, 9] ['1', '2'] [(1, 'a'), (2, 'b')]
+[(1, 'a'), (2, 'b')] ['c', 'b', 'a'] ['a', 'b', 'c'] [5, 3, 1]
+10 20 -1

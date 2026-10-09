@@ -1,0 +1,2 @@
+# expect: cannot convert float to bytes
+print(bytes(1.5))

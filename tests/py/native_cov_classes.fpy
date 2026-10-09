@@ -1,0 +1,3 @@
+import pycov_classes
+
+print(pycov_classes.run_all())

@@ -1,0 +1,15 @@
+from .. import shapes
+from ..shapes import Point as P
+from . import deep
+from .deep import DEPTH
+
+
+def inner_point() -> P:
+    return shapes.make_point(deep.DEPTH, DEPTH * 2)
+
+
+def nested_rel() -> int:
+    from .deep import boxed as bx
+    from ..shapes import make_point as mp
+
+    return bx(10).get() + mp(1, 2).y

@@ -1,0 +1,89 @@
+import sys
+from typing import Any, Iterator
+
+
+class Money:
+    def __init__(self, cents: int) -> None:
+        self.cents = cents
+
+    def __int__(self) -> int:
+        return self.cents
+
+    def __float__(self) -> float:
+        return self.cents / 100
+
+    def __abs__(self) -> "Money":
+        return Money(abs(self.cents))
+
+    def __reversed__(self) -> Iterator[int]:
+        return reversed([1, 2, self.cents])
+
+
+class Idx:
+    def __init__(self, v: int) -> None:
+        self.v = v
+
+    def __index__(self) -> int:
+        return self.v
+
+
+class Counter:
+    def __init__(self, n: int) -> None:
+        self.i = 0
+        self.n = n
+
+    def __iter__(self) -> "Counter":
+        return self
+
+    def __next__(self) -> int:
+        if self.i >= self.n:
+            raise StopIteration
+        self.i += 1
+        return self.i
+
+
+class Caller:
+    def __call__(self, x: int) -> int:
+        return x * 2
+
+
+def conversions() -> None:
+    print(str(), int(), float(), bool(), bytes())
+    print(str(5))
+    print(int(5), int(b"42"), int(b"ff", 16), int("z", base=36))
+    print(float(2.5), float(Money(250)))
+    print(int(Money(-7)), int(Idx(9)))
+    print(abs(Money(-30)).cents, abs(-3), abs(-2.5), abs(True))
+    print(list(reversed(Money(5))))
+    c = Counter(3)
+    print(next(c), next(c))
+    print(bytes("hé", "utf-8"))
+    print(bytes("xy", "ascii"))
+
+
+def numbers() -> None:
+    print(round(7), round(7, 2), round(2.567, 2), round(2.5))
+    print(divmod(7.5, 2), divmod(-7, 2), divmod(7, 2.0))
+    print(pow(3, 4), pow(3, 4, 5), pow(2.0, 3))
+    print(format(255, "x"), format(3.14159, ".2f"), format("ab", ">5"), format(42))
+    print(hex(255), oct(8), bin(5), chr(65), ord("a"))
+    print(sum([1.5, 2.5]), sum([1, 2], 10), sum([1, 2], 0.5), sum([True, True, False]))
+    print(sum(x * x for x in range(4)), sum([4], start=3))
+
+
+def misc() -> None:
+    print(callable(conversions), callable(Caller()), callable(Money), callable(5))
+    print(issubclass(bool, int), issubclass(int, str))
+    t: tuple[int, int, int] = tuple([1, 2, 3])
+    print(t, tuple())
+    print("a", "b", sep="-", end="!\n")
+    print(*[1, 2, 3])
+    print(*[1, 2, 3], sep=", ")
+    print("x", *["y", "z"], "w")
+    print("to stdout", file=sys.stdout, flush=True)
+    print(list(range(1, 5)))
+
+
+conversions()
+numbers()
+misc()

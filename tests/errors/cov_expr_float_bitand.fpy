@@ -1,0 +1,2 @@
+# expect: unsupported operand types for &: float
+x = 1.5 & 2.0

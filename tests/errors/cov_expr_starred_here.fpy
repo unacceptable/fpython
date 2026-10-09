@@ -1,0 +1,4 @@
+# expect: starred expression is not allowed here
+xs = [1]
+d = {1: 2}
+print(d[*xs])

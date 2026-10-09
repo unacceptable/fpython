@@ -1,0 +1,3 @@
+# expect: outside async function
+def f() -> None:
+    await f()

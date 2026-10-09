@@ -1,0 +1,3 @@
+# expect: invalid type annotation
+def f(x: 3) -> int:
+    return 0

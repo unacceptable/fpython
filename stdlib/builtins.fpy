@@ -1,0 +1,254 @@
+# fpython prelude: names available in every module.
+# Licensed under the PSF License Agreement (see LICENSE).
+from fpython import extern
+
+
+class _NoArg:
+    pass
+
+
+# default for exception constructors called without an argument (repr shows `E()`)
+_NO_ARG = _NoArg()
+
+
+class BaseException:
+    message: str
+    _repr_args: str
+    __cause__: BaseException | None = None
+    __context__: BaseException | None = None
+    args: tuple[object, ...]
+
+    def __init__(self, message: object = _NO_ARG) -> None:
+        if message is _NO_ARG:
+            self.message = ""
+            self._repr_args = ""
+            self.args = ()
+        else:
+            self.message = str(message)
+            self._repr_args = repr(message)
+            self.args = (message,)
+
+    def __str__(self) -> str:
+        return self.message
+
+    def __repr__(self) -> str:
+        return f"{type(self).__name__}({self._repr_args})"
+
+
+class Exception(BaseException):
+    pass
+
+
+class SystemExit(BaseException):
+    pass
+
+
+class KeyboardInterrupt(BaseException):
+    pass
+
+
+class GeneratorExit(BaseException):
+    pass
+
+
+class ArithmeticError(Exception):
+    pass
+
+
+class ZeroDivisionError(ArithmeticError):
+    pass
+
+
+class OverflowError(ArithmeticError):
+    pass
+
+
+class LookupError(Exception):
+    pass
+
+
+class IndexError(LookupError):
+    pass
+
+
+class KeyError(LookupError):
+    def __str__(self) -> str:
+        # like CPython: str() of a KeyError is the repr of its key
+        return self._repr_args
+
+
+class ValueError(Exception):
+    pass
+
+
+class UnicodeError(ValueError):
+    pass
+
+
+class TypeError(Exception):
+    pass
+
+
+class AttributeError(Exception):
+    pass
+
+
+class NameError(Exception):
+    pass
+
+
+class RuntimeError(Exception):
+    pass
+
+
+class NotImplementedError(RuntimeError):
+    pass
+
+
+class RecursionError(RuntimeError):
+    pass
+
+
+class AssertionError(Exception):
+    pass
+
+
+class StopIteration(Exception):
+    pass
+
+
+class StopAsyncIteration(Exception):
+    pass
+
+
+class OSError(Exception):
+    pass
+
+
+class FileNotFoundError(OSError):
+    pass
+
+
+class FileExistsError(OSError):
+    pass
+
+
+class PermissionError(OSError):
+    pass
+
+
+class TimeoutError(OSError):
+    pass
+
+
+class ImportError(Exception):
+    pass
+
+
+class ModuleNotFoundError(ImportError):
+    pass
+
+
+class MemoryError(Exception):
+    pass
+
+
+class EOFError(Exception):
+    pass
+
+
+@extern("fpy_exit")
+def _exit_now(code: int) -> None:
+    ...
+
+
+def exit(code: int = 0) -> None:
+    raise SystemExit(code)
+
+
+def quit(code: int = 0) -> None:
+    raise SystemExit(code)
+
+
+@extern("fpy_read_file")
+def _read_file(path: str) -> str:
+    ...
+
+
+@extern("fpy_write_file")
+def _write_file(path: str, data: str, append: bool) -> None:
+    ...
+
+
+class TextFile:
+    """A text file opened with open(). Reads load the whole file; writes flush on close()."""
+
+    name: str
+    mode: str
+    _data: str
+    _pos: int
+    _out: list[str]
+    closed: bool
+
+    def __init__(self, name: str, mode: str) -> None:
+        self.name = name
+        self.mode = mode
+        self._data = ""
+        self._pos = 0
+        self._out = []
+        self.closed = False
+        if "r" in mode:
+            self._data = _read_file(name)
+        elif "w" in mode:
+            _write_file(name, "", False)
+        elif "a" not in mode and "x" not in mode:
+            raise ValueError(f"invalid mode: '{mode}'")
+
+    def read(self) -> str:
+        s = self._data[self._pos:]
+        self._pos = len(self._data)
+        return s
+
+    def readline(self) -> str:
+        if self._pos >= len(self._data):
+            return ""
+        rest = self._data[self._pos:]
+        i = rest.find("\n")
+        if i < 0:
+            self._pos = len(self._data)
+            return rest
+        self._pos += i + 1
+        return rest[: i + 1]
+
+    def readlines(self) -> list[str]:
+        return self.read().splitlines(True)
+
+    def __iter__(self) -> Iterator[str]:
+        for line in self.read().splitlines(True):
+            yield line
+
+    def write(self, s: str) -> int:
+        if self.closed:
+            raise ValueError("I/O operation on closed file.")
+        self._out.append(s)
+        return len(s)
+
+    def flush(self) -> None:
+        if self._out:
+            _write_file(self.name, "".join(self._out), True)
+            self._out = []
+
+    def close(self) -> None:
+        if not self.closed:
+            self.flush()
+            self.closed = True
+
+    def __enter__(self) -> TextFile:
+        return self
+
+    def __exit__(self, t: object, v: object, tb: object) -> None:
+        self.close()
+
+
+def open(file: str, mode: str = "r", encoding: str = "utf-8") -> TextFile:
+    return TextFile(file, mode)

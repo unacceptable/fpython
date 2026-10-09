@@ -1,0 +1,6 @@
+# expect: cannot infer lambda parameter types
+def ident[T](x: T) -> T:
+    return x
+
+
+print(ident(lambda: 1))

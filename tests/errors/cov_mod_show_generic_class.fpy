@@ -1,0 +1,7 @@
+# expect: got Box[int]
+class Box[T]:
+    def __init__(self, v: T) -> None:
+        self.v = v
+
+
+x: str = Box(1)

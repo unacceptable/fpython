@@ -1,0 +1,34 @@
+12
+ParseError: bad int: 'x1'
+finally runs
+caught: division by zero
+finally runs
+0.5 None
+IndexError: list index out of range
+KeyError: 'missing'
+RuntimeError boom
+loop 0
+cleanup 0
+cleanup 1
+loop 2
+cleanup 2
+cleanup 3
+[0, 1, 4, 9, 16] 14
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+3
+1024 hi!!!
+3 9
+None
+int 5 str s list
+origin y-axis 5 x-axis 3 diagonal other 
+enter a
+enter b
+inside a
+exit b
+exit a
+Color.RED GREEN 3 True False
+got X
+walrus 5
+for-else ran 20
+[1, 4, 9] [0, 2, 4, 6, 8]
+assert: expected failure

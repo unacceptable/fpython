@@ -1,0 +1,217 @@
+from typing import Any, Callable, Iterator
+
+
+class Grid:
+    cells: list[int]
+
+    def __init__(self, cells: list[int]) -> None:
+        self.cells = cells
+
+    def __getitem__(self, i: int) -> int:
+        return self.cells[i]
+
+    def total(self) -> int:
+        return sum(self.cells)
+
+    def scale(self, k: int) -> list[int]:
+        return [c * k for c in self.cells]
+
+    def reset(self) -> None:
+        self.cells = []
+
+    @staticmethod
+    def make(n: int) -> int:
+        return n * 100
+
+
+class Money:
+    cents: int
+
+    def __init__(self, cents: int) -> None:
+        self.cents = cents
+
+    def __format__(self, spec: str) -> str:
+        return "$" + format(self.cents / 100, spec)
+
+    def __str__(self) -> str:
+        return f"{self.cents}c"
+
+
+class Tag:
+    name: str
+
+    def __init__(self, name: str) -> None:
+        self.name = name
+
+
+def double(x: int) -> int:
+    return x * 2
+
+
+def shout(s: str) -> None:
+    print(s.upper())
+
+
+def apply(f: Callable[[int], int], v: int) -> int:
+    return f(v)
+
+
+def func_values() -> None:
+    g = double
+    print(g(21), apply(double, 4))
+    h: Callable[[str], None] = shout
+    h("hey")
+    gr = Grid([1, 2, 3])
+    t = gr.total
+    sc = gr.scale
+    rs = gr.reset
+    print(t(), sc(3))
+    rs()
+    print(len(gr.cells))
+    mk = Grid.make
+    print(mk(7))
+    print(Grid.__name__, type(gr).__name__, gr.__class__.__name__)
+    print(
+        type(1).__name__,
+        type(1.5).__name__,
+        type(True).__name__,
+        type("s").__name__,
+        type(b"b").__name__,
+        type(None).__name__,
+    )
+    xs = [1]
+    print(type(xs).__name__)
+    n = 7
+    f = 2.5
+    print(n.real, n.numerator, n.denominator, f.real, f.imag)
+
+
+def subscripts() -> None:
+    xs = [10, 20, 30, 40, 50, 60]
+    print(xs[1:4], xs[::2], xs[::-1], xs[-2:], xs[:-4], xs[1:5:2])
+    s = "abcdefgh"
+    print(s[2:], s[::-2], s[-3:-1], s[5:1:-1])
+    b = b"hello world"
+    print(b[0], b[-1])
+    t = (1, "two", 3.0, True, None)
+    print(t[1:3], t[:2], t[-2:], t[3:1], t[:])
+    h = (4, 5, 6, 7)
+    i = 2
+    print(h[i], h[-1], h[i - 1])
+    g = Grid([7, 8, 9])
+    print(g[1], g[-1])
+    d = {"k": [1, 2]}
+    print(d["k"][1])
+    a: Any = [5, 6, 7]
+    print(a[1])
+
+
+def literals() -> None:
+    print(1e999, -1e999, 0x1F, 0o17, 0b101, 1_000_000)
+    print(b"\x00\x01ab", b"")
+    a = [1, 2]
+    b = [*a, 3, *a]
+    c = {*a, 9}
+    print(b, sorted(c))
+    print([*range(3)], [*"ab"])
+    e: list[str] = []
+    f: dict[str, int] = {}
+    g: list[int] | None = [1]
+    h: dict[str, int] | None = {"a": 1}
+    k: dict[str, int] | None = {}
+    print(e, f, g, h, k)
+    m = {**{"a": 1}, "b": 2}
+    print(m)
+    mixed = [1, "a"]
+    print(len(mixed))
+    w: list[float] = [1, 2.5]
+    print(w[0] + w[1])
+
+
+def walrus(xs: list[int]) -> None:
+    if (n := len(xs)) > 2:
+        print("long", n)
+    total = 0
+    i = 0
+    while (v := i * 2) < 8:
+        total += v
+        i += 1
+    print(total, v)
+    ys = [y for x in xs if (y := x * x) > 4]
+    print(ys)
+
+
+def fstrings() -> None:
+    x = 42
+    f = 3.14159
+    s = "hi"
+    ok = True
+    print(f"{x:5d}|{x:<5}|{x:^7}|{x:x}|{x:08b}|{x:+d}")
+    print(f"{f:.2f}|{f:10.3f}|{f:e}|{f:.1%}")
+    print(f"{s!r}|{s!s}|{s:>6}|{s!r:>8}|{s!s:<5}|")
+    print(f"{ok}|{ok!r}|{ok:d}")
+    print(f"{x!r} {f!r} {x=} {s=} {f=}")
+    m = Money(1234)
+    print(f"{m:.2f} {m!s:>8}", str(m))
+    t = Tag("t1")
+    xs = [1, 2]
+    print(f"{xs} {xs!r} {xs!a} {xs!s:>10}")
+    print(f"{'nested'!r:^12}")
+    w = 8
+    print(f"{x:{w}}|{f:{w}.{2}f}|")
+    print(f"{s!a}")
+    print(f"{None}")
+
+
+def isinst(v: int | str, o: Tag | None, a: Any, f: float, n: int) -> None:
+    if isinstance(v, int):
+        print("int", v + 1)
+    else:
+        print("str", v.upper())
+    if isinstance(o, Tag):
+        print("tag", o.name)
+    print(isinstance(a, int), isinstance(a, str), isinstance(a, list), isinstance(a, dict))
+    print(
+        isinstance(a, set),
+        isinstance(a, tuple),
+        isinstance(a, bytes),
+        isinstance(a, float),
+        isinstance(a, bool),
+    )
+    print(isinstance(a, (int, str)), isinstance(a, Tag))
+    print(isinstance(n, float), isinstance(True, int), isinstance(f, int))
+    xs = [1]
+    print(isinstance(xs, list), isinstance({1: 2}, dict))
+
+
+def gen_inner(n: int) -> Iterator[int]:
+    for i in range(n):
+        yield i
+
+
+def gen_outer(n: int) -> Iterator[int]:
+    yield -1
+    yield from gen_inner(n)
+    yield from [100, 200]
+
+
+def gen_infer() -> Iterator[str]:
+    yield from ["a", "b"]
+
+
+def main() -> None:
+    func_values()
+    subscripts()
+    literals()
+    walrus([1, 2, 3, 4])
+    fstrings()
+    isinst(4, Tag("a"), 5, 1.0, 1)
+    isinst("q", None, "s", 1.0, 1)
+    isinst(4, None, [1], 1.0, 1)
+    isinst(4, None, {1: 2}, 1.0, 1)
+    isinst(4, None, (1,), 1.0, 1)
+    isinst(4, None, Tag("z"), 1.0, 1)
+    print(list(gen_outer(3)), list(gen_infer()))
+
+
+main()

@@ -1,0 +1,6 @@
+# expect: class has no attribute 'nope'
+class A:
+    k: int = 1
+
+
+A.nope = 2

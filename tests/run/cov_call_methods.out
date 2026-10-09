@@ -1,0 +1,55 @@
+[3, 0, 1, 4, 9, 9]
+[9, 9, 4, 3, 1, 0]
+[9, 9, 4, 3, 1, 0]
+[4, 5]
+[5]
+[1, 5] [5]
+0
+[0, 1, 4, 9]
+2
+{'a': 1} {'a': 1, 'b': 2}
+{'x': 1, 'y': 2}
+{'k': 10, 'l': 11}
+{'p': 1, 'q': 2}
+['a', 'b', 'c'] [0, 1, 4, 9] [0, 1, 2]
+2 3
+4 7 3 6 7
+True True True
+['Hello', 'World'] ['Hello', 'World'] ['Hell', ' World'] ['Hello', 'World'] ['He', '', 'o Wor', 'd']
+['a', 'b'] ['a\n', 'b\n'] ['x', 'y']
+hello world hELLO wORLD Hello World Hello world
+**Hello World** Hello World..   Hello World 007
+('Hello', ' ', 'World') ('Hello W', 'o', 'rld')
+lo World Hello Wo HeLLo World
+a   b a       b
+True True True True True
+x y a b
+0,1,2
+b'Hello World'
+4 3 0 3
+True False 0x1.999999999999ap-4
+01ff ok
+1 2 3 -1
+0 1
+a
+[(1, 'a'), (2, 'b')]
+[(5, 'x'), (6, 'y')]
+1 3 2 2.0
+7 -1
+a ccc
+18 ('a', 9)
+['b', 'a']
+[9, 4, 1, 0] [0, 0, 1, 1, 2, 2]
+True False False True
+[2, 3] [1, 2]
+[0, 2, 4]
+['c', 'b', 'a'] [2, 1]
+[(1, 'a'), (2, 'b')]
+True True
+(2, 1) 3.142
+8
+6
+14
+4
+name? no input
+no input again

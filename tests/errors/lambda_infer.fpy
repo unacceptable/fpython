@@ -1,0 +1,2 @@
+# expect: cannot infer lambda parameter types
+f = lambda x: x

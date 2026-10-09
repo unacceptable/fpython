@@ -1,0 +1,9 @@
+# expect: enum values must be int literals or auto()
+from enum import Enum
+
+
+class E(Enum):
+    A = "a"
+
+
+print(E.A)

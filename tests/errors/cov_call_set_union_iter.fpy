@@ -1,0 +1,3 @@
+# expect: expected an iterable
+s = {1}
+print(s.union(5))

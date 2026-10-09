@@ -1,0 +1,2 @@
+# expect: cannot unpack non-iterable
+y: set[int] = {1, *5}

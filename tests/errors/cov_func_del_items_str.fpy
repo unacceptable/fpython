@@ -1,0 +1,3 @@
+# expect: cannot delete items of str
+s = "abc"
+del s[0]

@@ -1,0 +1,6 @@
+# expect: Self is only valid inside a class
+from typing import Self
+
+
+def f(x: Self) -> int:
+    return 0

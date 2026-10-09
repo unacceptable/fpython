@@ -1,0 +1,36 @@
+"""Import regressions (bug backlog B3, B17, B18)."""
+from regress_pkg import inner
+from regress_pkg.inner import TOTAL
+
+print(inner.TOTAL, TOTAL)
+
+
+def local_variable_imports() -> str:
+    # B18: function-local `from m import VAR`
+    from math import pi
+    from regress_pkg.inner import deep
+    from regress_pkg.inner.deep import DEPTH as D
+
+    return f"{pi:.4f} {D + deep.DEPTH}"
+
+
+def local_module_imports() -> str:
+    # B3: function-local import of a module not imported at top level
+    import os.path
+
+    return os.path.basename("/a/b")
+
+
+print(local_variable_imports(), local_module_imports())
+import regress_pkg.inner.deep
+
+
+def dotted_annotations(
+    b: regress_pkg.inner.deep.Box[float],
+    p: regress_pkg.inner.deep.Point,
+) -> float:
+    # B19: annotations through dotted module paths
+    return b.item + p.x
+
+
+print(dotted_annotations(regress_pkg.inner.deep.Box(1.5), regress_pkg.inner.deep.Point(2)))

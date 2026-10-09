@@ -1,0 +1,6 @@
+# expect: yield from needs an iterable
+from typing import Iterator
+
+
+def f() -> Iterator[int]:
+    yield from 5

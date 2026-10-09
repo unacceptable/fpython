@@ -1,0 +1,6 @@
+# B17: relative imports inside a package __init__ (one dot is the package itself)
+from .. import shapes
+from .deep import DEPTH
+from . import deep
+
+TOTAL = shapes.area(2, 3) + DEPTH + deep.DEPTH

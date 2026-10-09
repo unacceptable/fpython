@@ -1,0 +1,6 @@
+# expect: cannot infer type parameter
+def first[T](xs: list[T]) -> T:
+    return xs[0]
+
+
+print(first([]))

@@ -1,0 +1,6 @@
+# expect: got list[Any]
+from typing import Any
+
+
+def f(a: Any) -> int:
+    return [a]

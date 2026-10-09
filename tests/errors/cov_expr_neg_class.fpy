@@ -1,0 +1,6 @@
+# expect: bad operand type for unary -
+class A:
+    pass
+
+
+y = -A()

@@ -1,0 +1,6 @@
+# expect: got Callable[[int, str], float]
+def g(a: int, b: str) -> float:
+    return 1.0
+
+
+x: int = g

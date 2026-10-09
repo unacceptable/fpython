@@ -1,0 +1,2 @@
+# expect: got dict[str, float]
+x: int = {"a": 1.5}

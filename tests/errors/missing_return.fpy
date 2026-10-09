@@ -1,0 +1,4 @@
+# expect: missing a return statement
+def f(x: int) -> int:
+    if x > 0:
+        return 1

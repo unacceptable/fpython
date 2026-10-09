@@ -1,0 +1,6 @@
+# expect: object is not subscriptable
+class A:
+    pass
+
+
+x = A()[1:2]

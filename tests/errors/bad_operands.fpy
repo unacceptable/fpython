@@ -1,0 +1,2 @@
+# expect: unsupported operand types
+x = "a" - 1

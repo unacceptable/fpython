@@ -1,0 +1,2 @@
+# expect: int is not reversible
+print(reversed(5))

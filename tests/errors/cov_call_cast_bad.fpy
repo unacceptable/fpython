@@ -1,0 +1,4 @@
+# expect: cannot cast str to int
+from typing import cast
+
+x = cast(int, "s")

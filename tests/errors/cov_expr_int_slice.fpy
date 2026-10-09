@@ -1,0 +1,2 @@
+# expect: int cannot be sliced
+x = (5)[1:2]

@@ -1,0 +1,3 @@
+# expect: print(file=...) supports only sys.stdout and sys.stderr
+def f(out: str) -> None:
+    print("x", file=out)

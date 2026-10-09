@@ -1,0 +1,6 @@
+# expect: bad operand type for abs()
+class A:
+    pass
+
+
+print(abs(A()))

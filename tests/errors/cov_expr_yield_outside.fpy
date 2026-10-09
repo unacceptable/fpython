@@ -1,0 +1,4 @@
+# expect: 'yield' outside generator function
+from typing import Callable
+
+f: Callable[[], None] = lambda: yield

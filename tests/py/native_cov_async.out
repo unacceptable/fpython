@@ -1,0 +1,1 @@
+(8, 'custom-await', [0, 2, 4, 6], 42, 10, 14, [0, 4], {0: 0, 1: 2}, ['acquire', 'acquire', 'release ok', 'release ok', 'acquire', 'release ValueError', 'caught async boom', 'finally', 'for-else'])

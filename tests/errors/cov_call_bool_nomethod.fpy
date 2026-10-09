@@ -1,0 +1,3 @@
+# expect: 'bool' has no method 'zap'
+x = True
+print(x.zap())

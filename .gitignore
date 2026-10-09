@@ -1,0 +1,21 @@
+# Rust build output
+/target/
+
+# release archives (`fpython` binaries are published as release assets, not committed)
+/dist/
+
+# benchmark binaries (bench/run.py builds them)
+/bench/build/
+
+# fpython build output and generated docs (`fpython build` / `fpython doc` in a project)
+build/
+
+# Python
+__pycache__/
+*.pyc
+
+# editors / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp

@@ -1,0 +1,3 @@
+import pycov_flow
+
+print(pycov_flow.run_all())

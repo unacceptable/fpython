@@ -1,0 +1,6 @@
+# expect: unknown type 'Nope'
+import typing
+
+
+def f(x: typing.Nope) -> int:
+    return 0

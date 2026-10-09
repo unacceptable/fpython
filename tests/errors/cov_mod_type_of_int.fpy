@@ -1,0 +1,3 @@
+# expect: type[int] is not supported
+def f(x: type[int]) -> int:
+    return 0

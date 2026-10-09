@@ -1,0 +1,2 @@
+# expect: bad operand type for unary +: str
+y = +"s"

@@ -1,0 +1,77 @@
+42 8
+HEY
+6 [3, 6, 9]
+0
+700
+Grid Grid Grid
+int float bool str bytes NoneType
+list
+7 7 1 2.5 0.0
+[20, 30, 40] [10, 30, 50] [60, 50, 40, 30, 20, 10] [50, 60] [10, 20] [20, 40]
+cdefgh hfdb fg fedc
+104 100
+('two', 3.0) (1, 'two') (True, None) () (1, 'two', 3.0, True, None)
+6 7 5
+8 9
+2
+6
+inf -inf 31 15 5 1000000
+b'\x00\x01ab' b''
+[1, 2, 3, 1, 2] [1, 2, 9]
+[0, 1, 2] ['a', 'b']
+[] {} [1] {'a': 1} {}
+{'a': 1, 'b': 2}
+2
+3.5
+long 4
+12 8
+[9, 16]
+   42|42   |  42   |2a|00101010|+42
+3.14|     3.142|3.141590e+00|314.2%
+'hi'|hi|    hi|    'hi'|hi   |
+True|True|1
+42 3.14159 x=42 s='hi' f=3.14159
+$12.34    1234c 1234c
+[1, 2] [1, 2] [1, 2]     [1, 2]
+  'nested'  
+      42|    3.14|
+'hi'
+None
+int 5
+tag a
+True False False False
+False False False False False
+True False
+False True False
+True True
+str Q
+False True False False
+False False False False False
+True False
+False True False
+True True
+int 5
+False False True False
+False False False False False
+False False
+False True False
+True True
+int 5
+False False False True
+False False False False False
+False False
+False True False
+True True
+int 5
+False False False False
+False True False False False
+False False
+False True False
+True True
+int 5
+False False False False
+False False False False False
+False True
+False True False
+True True
+[-1, 0, 1, 2, 100, 200] ['a', 'b']

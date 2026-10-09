@@ -1,0 +1,2 @@
+# expect: sum() of str is not supported
+print(sum(["a", "b"]))

@@ -1,0 +1,3 @@
+# expect: iterator has no method 'zap'
+it = iter([1])
+print(it.zap())

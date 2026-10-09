@@ -1,0 +1,8 @@
+# expect: value may be None; check `is not None` before calling '.m()'
+class A:
+    def m(self) -> int:
+        return 1
+
+
+def f(a: A | None) -> int:
+    return a.m()

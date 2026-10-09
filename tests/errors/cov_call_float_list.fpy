@@ -1,0 +1,2 @@
+# expect: float() argument must be a string or a number, not list[int]
+print(float([1]))

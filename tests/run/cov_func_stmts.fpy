@@ -1,0 +1,379 @@
+from typing import Any, Iterator, ClassVar
+
+counter = 0
+names: list[str] = []
+late_value: int
+
+
+class Box:
+    count: ClassVar[int] = 0
+
+    def __init__(self, v: int) -> None:
+        self.v = v
+        self.items: list[int] = []
+        self.tags: dict[str, int] = {}
+
+
+class Grid:
+    def __init__(self) -> None:
+        self.cells: dict[int, str] = {}
+
+    def __setitem__(self, k: int, v: str) -> None:
+        self.cells[k] = v
+
+    def __getitem__(self, k: int) -> str:
+        return self.cells.get(k, ".")
+
+
+def bump() -> int:
+    global counter
+    counter += 1
+    return counter
+
+
+def set_new_global() -> None:
+    global late_value
+    late_value = 42
+
+
+def chained() -> None:
+    a = b = 5
+    print("chained", a, b)
+    xs = ys = [1, 2]
+    xs.append(3)
+    print("aliased", ys)
+    p, q = 1, "two"
+    print("tuple", p, q)
+    [m, n] = [3, 4]
+    print("list targets", m, n)
+    first, *middle, last = [1, 2, 3, 4, 5]
+    print("star mid", first, middle, last)
+    *init, tail = [10, 20, 30]
+    print("star first", init, tail)
+    head, *rest = [7]
+    print("star empty", head, rest)
+    (u, v), w = (1, 2), 3
+    print("nested", u, v, w)
+    try:
+        a1, b1 = [1, 2, 3]
+        print(a1, b1)
+    except ValueError as e:
+        print("unpack error caught")
+    try:
+        c1, d1, *e1 = [1]
+        print(c1, d1, e1)
+    except ValueError as e:
+        print("star unpack error:", e)
+
+
+def annotated() -> None:
+    x: int = 3
+    y: list[int] = []
+    z: dict[str, list[int]] = {}
+    o: list[int] | None = []
+    s: set[str] = set()
+    y.append(x)
+    z["a"] = y
+    s.add("q")
+    w: int
+    w = 9
+    print("annotated", x, y, z, o, len(s), w)
+
+
+def augmented() -> None:
+    b = Box(1)
+    b.v += 10
+    b.v *= 2
+    b.v -= 1
+    b.v //= 3
+    print("attr aug", b.v)
+    b.items += [1, 2]
+    b.items += range(3)
+    print("list extend", b.items)
+    b.tags["x"] = 1
+    b.tags["x"] += 5
+    b.tags["y"] = b.tags.get("y", 0) + 7
+    print("dict aug", b.tags)
+    nested: dict[str, list[int]] = {"k": [1]}
+    nested["k"] += [2, 3]
+    print("dict list aug", nested)
+    words: dict[str, str] = {"a": "x"}
+    words["a"] += "y"
+    print("dict str aug", words)
+    nums = [1, 2, 3]
+    nums[0] += 100
+    nums[-1] *= 5
+    print("list aug", nums)
+    g = Grid()
+    g[1] = "a"
+    g[1] += "b"
+    print("grid", g[1], g[2])
+    lists = [[1], [2]]
+    lists[0] += [9]
+    print("nested list aug", lists)
+    s = "ab"
+    s *= 2
+    f = 1.5
+    f **= 2
+    n = 17
+    n %= 5
+    n <<= 3
+    n |= 1
+    n ^= 2
+    n &= 0xFF
+    n >>= 1
+    print("ops", s, f, n)
+    Box.count += 1
+    Box.count += 1
+    print("class var", Box.count)
+
+
+def deletions() -> None:
+    xs = [0, 1, 2, 3, 4, 5, 6]
+    del xs[0]
+    del xs[1:3]
+    print("del list", xs)
+    del xs[:1]
+    del xs[2:]
+    print("del slices", xs)
+    d = {"a": 1, "b": 2, "c": 3}
+    del d["b"]
+    print("del dict", d)
+    tmp = 5
+    del tmp
+    try:
+        del d["zz"]
+    except KeyError as e:
+        print("del missing", e)
+
+
+def slices() -> None:
+    xs = [0, 1, 2, 3, 4]
+    xs[1:3] = [9, 9, 9]
+    print(xs)
+    xs[:2] = []
+    print(xs)
+    xs[3:] = [7]
+    print(xs)
+
+
+def loops() -> None:
+    i = 0
+    while i < 5:
+        i += 1
+        if i == 3:
+            break
+    else:
+        print("while else not reached")
+    print("while broke at", i)
+    j = 0
+    while j < 3:
+        j += 1
+    else:
+        print("while else ran", j)
+    for k in range(10):
+        if k % 2 == 0:
+            continue
+        if k > 6:
+            break
+        print("odd", k)
+    else:
+        print("for else not reached")
+    for k in range(2):
+        pass
+    else:
+        print("for else ran")
+    for k in range(10, 0, -3):
+        print("down", k)
+    step = -2
+    for k in range(5, 0, step):
+        print("var step", k)
+    step2 = 2
+    for k in range(0, 5, step2):
+        print("var step pos", k)
+    try:
+        zero = 0
+        for k in range(0, 5, zero):
+            print(k)
+    except ValueError as e:
+        print("range error:", e)
+    for idx, ch in enumerate("abc", 1):
+        print("enum", idx, ch)
+    for idx, ch in enumerate(["x", "y"], start=5):
+        print("enum kw", idx, ch)
+    for r in reversed([1, 2, 3]):
+        print("rev", r)
+    for r in reversed(range(3)):
+        print("rev range", r)
+    for key, val in {"a": 1, "b": 2}.items():
+        print("items", key, val)
+    for key in {"q": 1}:
+        print("dict key", key)
+    for v in {"q": 1, "r": 2}.values():
+        print("dict val", v)
+    for t in (1, 2, 3):
+        print("tuple elt", t)
+    for byte in b"AB":
+        print("byte", byte)
+    for a, b in zip([1, 2], ["x", "y"]):
+        print("zip", a, b)
+    for ch in "hi":
+        print("char", ch)
+    for n in {3}:
+        print("set", n)
+    for outer in range(3):
+        for inner in range(3):
+            if inner == 1:
+                break
+        else:
+            print("never")
+        if outer == 1:
+            continue
+        print("outer", outer)
+
+
+def gen_list() -> Iterator[int]:
+    yield 1
+    yield 2
+
+
+def any_ops(d: Any) -> None:
+    d["k"] = 5
+    print("any setitem", d["k"])
+    a, b = d["pair"]
+    print("any unpack", a, b)
+
+
+class Obj:
+    def __init__(self) -> None:
+        self.val = 0
+
+
+def any_attr(o: Any) -> None:
+    o.val = 77
+
+
+def asserts() -> None:
+    assert 1 + 1 == 2
+    assert True, "not shown"
+    try:
+        assert 1 > 2, "math is broken"
+    except AssertionError as e:
+        print("assert:", e)
+    try:
+        assert False
+    except AssertionError as e:
+        print("bare assert caught")
+
+
+chained()
+annotated()
+augmented()
+deletions()
+slices()
+loops()
+print(bump(), bump(), counter)
+set_new_global()
+print("late", late_value)
+names.append("n")
+names += ["m"]
+print(names)
+for gv in gen_list():
+    print("gen", gv)
+dd: dict[str, Any] = {"pair": [1, 2]}
+any_ops(dd)
+ob = Obj()
+any_attr(ob)
+print("any attr", ob.val)
+asserts()
+x1 = y1 = 3
+print(x1 + y1)
+
+
+class Tally:
+    total: ClassVar[int] = 0
+
+    def __init__(self) -> None:
+        self.n = 0
+
+    def hit(self) -> None:
+        self.n += 1
+        Tally.total = self.total + 1
+
+
+def consume(it: Iterator[int]) -> int:
+    s = 0
+    for v in it:
+        s += v
+    return s
+
+
+def log_none() -> None:
+    return print("logged via return")
+
+
+def misc() -> None:
+    d: dict[str, int] = {"a": 1}
+    other: dict[str, int] = {"a": 10}
+    k = "a"
+    k2 = "b"
+    d[k] = d.get(k, 0) + 1
+    d[k2] = d.get(k, 0) + 5
+    d[k] = other.get(k, 0) * 2
+    d[k2] = d.get(k2) or 3
+    print("peephole", d)
+    groups: dict[str, list[int]] = {}
+    groups[k] = groups.get(k, []) + [1]
+    print("groups", groups)
+    t = Tally()
+    t.hit()
+    t.hit()
+    print("tally", t.n, Tally.total)
+    print("consume", consume(iter([1, 2, 3])))
+    log_none()
+    maybe: dict[str, int] | None = {}
+    print("maybe", maybe)
+    any_list: list[Any] = [1, "two", [3]]
+    for item in any_list:
+        print("any item", item)
+    anyv: Any = [4, 5]
+    for item in anyv:
+        print("dyn iter", item)
+    print([x + 1 for x in anyv])
+
+
+misc()
+
+
+def more_loops(anyv: Any) -> None:
+    data = b"xy"
+    for x in data:
+        print("bytes var", x)
+    d = {"a": 1, "b": 2}
+    for kv in d.items():
+        print("kv tuple", kv)
+    for kk in d.keys():
+        print("keys", kk)
+    for n, s in zip(range(3), "abc"):
+        print("zip iter", n, s)
+    for n, a in zip([1, 2], anyv):
+        print("zip any", n, a)
+    for i, (p, q) in enumerate([(1, "a"), (2, "b")]):
+        print("enum nested", i, p, q)
+    for r in reversed("ab"):
+        print("rev str", r)
+    tri = (4, 5, 6)
+    for v in tri:
+        print("tuple var", v)
+    gen = (x * 3 for x in range(3))
+    for g in gen:
+        print("genexp", g)
+    i = 0
+    while True:
+        i += 1
+        if i > 2:
+            break
+    print("while true", i)
+
+
+more_loops([7, 8])

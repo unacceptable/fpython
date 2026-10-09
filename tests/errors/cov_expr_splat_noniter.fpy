@@ -1,0 +1,2 @@
+# expect: cannot unpack non-iterable
+x = [*5]

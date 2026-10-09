@@ -1,0 +1,2 @@
+# expect: cannot unpack
+xs = [a for a, b in [1, 2]]

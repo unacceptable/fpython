@@ -1,0 +1,4 @@
+service: s3
+buckets: ['alpha', 'beta']
+caught: NoSuchKey
+regions>5: True

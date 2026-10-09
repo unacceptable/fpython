@@ -1,0 +1,7 @@
+# expect: 'A' object has no method '__enter__'
+class A:
+    pass
+
+
+with A():
+    pass

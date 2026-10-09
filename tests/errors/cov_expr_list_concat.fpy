@@ -1,0 +1,4 @@
+# expect: cannot concatenate list[int] and list[str]
+a: list[int] = [1]
+b: list[str] = ["a"]
+c = a + b

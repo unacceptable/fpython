@@ -1,0 +1,3 @@
+# expect: conditional expression branches have incompatible types
+def f(b: bool) -> None:
+    x = [1] if b else "s"

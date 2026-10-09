@@ -1,0 +1,8 @@
+# expect: generic class 'Box' needs type arguments
+class Box[T]:
+    def __init__(self, v: T) -> None:
+        self.v = v
+
+
+def f(b: Box) -> int:
+    return 0

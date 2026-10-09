@@ -1,0 +1,2 @@
+# expect: exceptions must derive from BaseException, not int
+raise 5

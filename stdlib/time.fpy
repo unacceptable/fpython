@@ -1,0 +1,35 @@
+# fpython stdlib: time
+from fpython import extern
+
+
+@extern("fpy_time_now")
+def time() -> float:
+    ...
+
+
+@extern("fpy_perf_counter")
+def perf_counter() -> float:
+    ...
+
+
+@extern("fpy_perf_counter")
+def monotonic() -> float:
+    ...
+
+
+@extern("fpy_time_ns")
+def time_ns() -> int:
+    ...
+
+
+@extern("fpy_sleep")
+def sleep(secs: float) -> None:
+    ...
+
+
+def perf_counter_ns() -> int:
+    return int(perf_counter() * 1e9)
+
+
+def monotonic_ns() -> int:
+    return int(monotonic() * 1e9)

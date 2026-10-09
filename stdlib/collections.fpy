@@ -1,0 +1,100 @@
+# fpython stdlib: collections (typed subset)
+class deque[T]:  # noqa: N801
+    """Double-ended queue backed by a ring buffer."""
+
+    _buf: list[T]
+    _head: int
+    _size: int
+
+    def __init__(self) -> None:
+        self._buf = []
+        self._head = 0
+        self._size = 0
+
+    def __len__(self) -> int:
+        return self._size
+
+    def _grow(self) -> None:
+        old = self._buf
+        n = len(old)
+        items: list[T] = []
+        for i in range(self._size):
+            items.append(old[(self._head + i) % n])
+        # double capacity by repeating existing items as filler
+        if items:
+            filler = items[0]
+            while len(items) < max(8, n * 2):
+                items.append(filler)
+        self._buf = items
+        self._head = 0
+
+    def append(self, x: T) -> None:
+        if self._size == len(self._buf):
+            if self._size == 0:
+                self._buf = [x]
+                self._head = 0
+                self._size = 1
+                return
+            self._grow()
+        self._buf[(self._head + self._size) % len(self._buf)] = x
+        self._size += 1
+
+    def appendleft(self, x: T) -> None:
+        if self._size == len(self._buf):
+            if self._size == 0:
+                self._buf = [x]
+                self._head = 0
+                self._size = 1
+                return
+            self._grow()
+        self._head = (self._head - 1) % len(self._buf)
+        self._buf[self._head] = x
+        self._size += 1
+
+    def pop(self) -> T:
+        if self._size == 0:
+            raise IndexError("pop from an empty deque")
+        self._size -= 1
+        return self._buf[(self._head + self._size) % len(self._buf)]
+
+    def popleft(self) -> T:
+        if self._size == 0:
+            raise IndexError("pop from an empty deque")
+        x = self._buf[self._head]
+        self._head = (self._head + 1) % len(self._buf)
+        self._size -= 1
+        return x
+
+    def __getitem__(self, i: int) -> T:
+        if i < 0:
+            i += self._size
+        if i < 0 or i >= self._size:
+            raise IndexError("deque index out of range")
+        return self._buf[(self._head + i) % len(self._buf)]
+
+    def __iter__(self) -> Iterator[T]:
+        for i in range(self._size):
+            yield self._buf[(self._head + i) % len(self._buf)]
+
+    def __bool__(self) -> bool:
+        return self._size > 0
+
+    def clear(self) -> None:
+        self._buf = []
+        self._head = 0
+        self._size = 0
+
+
+def Counter[T](items: list[T]) -> dict[T, int]:  # noqa: N802
+    counts: dict[T, int] = {}
+    for x in items:
+        counts[x] = counts.get(x, 0) + 1
+    return counts
+
+
+def most_common[T](counts: dict[T, int], n: int = -1) -> list[tuple[T, int]]:
+    pairs = list(counts.items())
+    pairs.sort(key=lambda p: p[1], reverse=True)
+    if n >= 0:
+        return pairs[:n]
+    return pairs

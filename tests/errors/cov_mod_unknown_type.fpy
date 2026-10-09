@@ -1,0 +1,3 @@
+# expect: unknown type 'Frobnicator'
+def f(x: Frobnicator) -> int:
+    return 0

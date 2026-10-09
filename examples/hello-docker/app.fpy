@@ -1,0 +1,30 @@
+"""Example service: computes primes and prints a JSON summary (runs in a FROM scratch image)."""
+import json
+import sys
+from typing import Any
+
+
+def primes_below(n: int) -> list[int]:
+    sieve = [True] * n
+    out: list[int] = []
+    for i in range(2, n):
+        if sieve[i]:
+            out.append(i)
+            for j in range(i * i, n, i):
+                sieve[j] = False
+    return out
+
+
+def main() -> None:
+    limit = int(sys.argv[1]) if len(sys.argv) > 1 else 100
+    ps = primes_below(limit)
+    summary: dict[str, Any] = {
+        "limit": limit,
+        "count": len(ps),
+        "largest": ps[-1],
+        "platform": sys.platform,
+    }
+    print(json.dumps(summary))
+
+
+main()

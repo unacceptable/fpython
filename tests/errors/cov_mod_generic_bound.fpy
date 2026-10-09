@@ -1,0 +1,11 @@
+# expect: does not satisfy bound Base
+class Base:
+    def tag(self) -> str:
+        return "b"
+
+
+def f[T: Base](x: T) -> str:
+    return x.tag()
+
+
+print(f(3))

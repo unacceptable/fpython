@@ -1,0 +1,6 @@
+# expect: nested generic functions are not supported
+def outer() -> int:
+    def ident[T](x: T) -> T:
+        return x
+
+    return ident(1)

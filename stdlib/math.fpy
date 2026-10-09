@@ -1,0 +1,273 @@
+# fpython stdlib: math (bindings to libm).
+from fpython import extern
+
+pi: float = 3.141592653589793
+e: float = 2.718281828459045
+tau: float = 6.283185307179586
+inf: float = float("inf")
+nan: float = float("nan")
+
+
+@extern("sqrt")
+def sqrt(x: float) -> float:
+    ...
+
+
+@extern("sin")
+def sin(x: float) -> float:
+    ...
+
+
+@extern("cos")
+def cos(x: float) -> float:
+    ...
+
+
+@extern("tan")
+def tan(x: float) -> float:
+    ...
+
+
+@extern("asin")
+def asin(x: float) -> float:
+    ...
+
+
+@extern("acos")
+def acos(x: float) -> float:
+    ...
+
+
+@extern("atan")
+def atan(x: float) -> float:
+    ...
+
+
+@extern("atan2")
+def atan2(y: float, x: float) -> float:
+    ...
+
+
+@extern("sinh")
+def sinh(x: float) -> float:
+    ...
+
+
+@extern("cosh")
+def cosh(x: float) -> float:
+    ...
+
+
+@extern("tanh")
+def tanh(x: float) -> float:
+    ...
+
+
+@extern("exp")
+def exp(x: float) -> float:
+    ...
+
+
+@extern("exp2")
+def exp2(x: float) -> float:
+    ...
+
+
+@extern("expm1")
+def expm1(x: float) -> float:
+    ...
+
+
+@extern("log1p")
+def log1p(x: float) -> float:
+    ...
+
+
+@extern("log2")
+def log2(x: float) -> float:
+    ...
+
+
+@extern("log10")
+def log10(x: float) -> float:
+    ...
+
+
+@extern("fabs")
+def fabs(x: float) -> float:
+    ...
+
+
+@extern("hypot")
+def hypot(x: float, y: float) -> float:
+    ...
+
+
+@extern("copysign")
+def copysign(x: float, y: float) -> float:
+    ...
+
+
+@extern("fmod")
+def fmod(x: float, y: float) -> float:
+    ...
+
+
+@extern("pow")
+def pow(x: float, y: float) -> float:
+    ...
+
+
+@extern("cbrt")
+def cbrt(x: float) -> float:
+    ...
+
+
+@extern("floor")
+def _floor(x: float) -> float:
+    ...
+
+
+@extern("ceil")
+def _ceil(x: float) -> float:
+    ...
+
+
+@extern("trunc")
+def _trunc(x: float) -> float:
+    ...
+
+
+@extern("log")
+def _log(x: float) -> float:
+    ...
+
+
+def log(x: float, base: float = 0.0) -> float:
+    if x <= 0.0:
+        raise ValueError("math domain error")
+    if base == 0.0:
+        return _log(x)
+    return _log(x) / _log(base)
+
+
+def floor(x: float) -> int:
+    return int(_floor(x))
+
+
+def ceil(x: float) -> int:
+    return int(_ceil(x))
+
+
+def trunc(x: float) -> int:
+    return int(_trunc(x))
+
+
+def isnan(x: float) -> bool:
+    return x != x
+
+
+def isinf(x: float) -> bool:
+    return x == inf or x == -inf
+
+
+def isfinite(x: float) -> bool:
+    return not isnan(x) and not isinf(x)
+
+
+def isclose(a: float, b: float, rel_tol: float = 1e-09, abs_tol: float = 0.0) -> bool:
+    if a == b:
+        return True
+    diff = fabs(b - a)
+    return diff <= fabs(rel_tol * b) or diff <= fabs(rel_tol * a) or diff <= abs_tol
+
+
+def degrees(x: float) -> float:
+    return x * 180.0 / pi
+
+
+def radians(x: float) -> float:
+    return x * pi / 180.0
+
+
+def gcd(a: int, b: int) -> int:
+    a = abs(a)
+    b = abs(b)
+    while b:
+        a, b = b, a % b
+    return a
+
+
+def lcm(a: int, b: int) -> int:
+    if a == 0 or b == 0:
+        return 0
+    return abs(a // gcd(a, b) * b)
+
+
+def factorial(n: int) -> int:
+    if n < 0:
+        raise ValueError("factorial() not defined for negative values")
+    r = 1
+    for i in range(2, n + 1):
+        r *= i
+    return r
+
+
+def comb(n: int, k: int) -> int:
+    if k < 0 or k > n:
+        return 0
+    k = min(k, n - k)
+    r = 1
+    for i in range(1, k + 1):
+        r = r * (n - k + i) // i
+    return r
+
+
+def perm(n: int, k: int) -> int:
+    if k < 0 or k > n:
+        return 0
+    r = 1
+    for i in range(n - k + 1, n + 1):
+        r *= i
+    return r
+
+
+def isqrt(n: int) -> int:
+    if n < 0:
+        raise ValueError("isqrt() argument must be nonnegative")
+    if n == 0:
+        return 0
+    x = int(sqrt(float(n)))
+    while x * x > n:
+        x -= 1
+    while (x + 1) * (x + 1) <= n:
+        x += 1
+    return x
+
+
+def fsum(xs: list[float]) -> float:
+    # Kahan-Babuska summation
+    s = 0.0
+    c = 0.0
+    for x in xs:
+        t = s + x
+        if fabs(s) >= fabs(x):
+            c += (s - t) + x
+        else:
+            c += (x - t) + s
+        s = t
+    return s + c
+
+
+def prod(xs: list[int]) -> int:
+    r = 1
+    for x in xs:
+        r *= x
+    return r
+
+
+def dist(p: list[float], q: list[float]) -> float:
+    s = 0.0
+    for a, b in zip(p, q):
+        s += (a - b) * (a - b)
+    return sqrt(s)

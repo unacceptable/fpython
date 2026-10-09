@@ -1,0 +1,6 @@
+# expect: too many arguments for f()
+def f(a: int) -> int:
+    return a
+
+
+f(*(1, 2))

@@ -1,0 +1,6 @@
+# expect: class 'A' has no method 'zap'
+class A:
+    pass
+
+
+A.zap()

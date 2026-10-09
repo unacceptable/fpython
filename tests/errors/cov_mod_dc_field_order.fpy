@@ -1,0 +1,11 @@
+# expect: non-default field 'b' follows a default field
+from dataclasses import dataclass
+
+
+@dataclass
+class A:
+    a: int = 0
+    b: int
+
+
+print(A(1, 2))

@@ -1,0 +1,238 @@
+from dataclasses import dataclass
+
+
+@dataclass
+class Point:
+    x: int
+    y: int
+
+
+@dataclass
+class Circle:
+    center: Point
+    r: int
+
+
+class Shape:
+    def __init__(self, name: str) -> None:
+        self.name = name
+
+
+class Square(Shape):
+    def __init__(self, side: int) -> None:
+        super().__init__("square")
+        self.side = side
+
+
+def classify_point(p: Point) -> str:
+    match p:
+        case Point(0, 0):
+            return "origin"
+        case Point(x=0, y=yy):
+            return f"on y axis at {yy}"
+        case Point(xx, 0):
+            return f"on x axis at {xx}"
+        case Point(x=a, y=b) if a == b:
+            return f"diagonal {a}"
+        case Point() as q:
+            return f"other {q.x},{q.y}"
+    return "?"
+
+
+def classify_int(n: int) -> str:
+    match n:
+        case 0 | 1 | 2:
+            return "small"
+        case int(v) if v < 0:
+            return f"negative {v}"
+        case 10 as ten:
+            return f"ten {ten}"
+        case _:
+            return "big"
+    return "?"
+
+
+def classify_str(s: str) -> str:
+    match s:
+        case "a" | "b":
+            return "ab"
+        case str(t):
+            return "str " + t
+    return "?"
+
+
+def seq(xs: list[int]) -> str:
+    match xs:
+        case []:
+            return "empty"
+        case [a]:
+            return f"one {a}"
+        case [a, b]:
+            return f"two {a} {b}"
+        case [first, *rest]:
+            return f"first {first} rest {rest}"
+    return "?"
+
+
+def seq2(xs: list[int]) -> str:
+    match xs:
+        case [1, *_]:
+            return "starts with one"
+        case [9, *mid]:
+            return f"nine then {mid}"
+        case [_, _, _]:
+            return "three"
+        case _:
+            return "other"
+    return "?"
+
+
+def tup(t: tuple[int, str]) -> str:
+    match t:
+        case (0, s):
+            return "zero " + s
+        case (n, "x"):
+            return f"x {n}"
+        case (n, s):
+            return f"{n}:{s}"
+    return "?"
+
+
+def mapping(d: dict[str, int]) -> str:
+    match d:
+        case {"a": 1, "b": bb}:
+            return f"a1 b{bb}"
+        case {"a": aa, **rest}:
+            return f"a{aa} has c: {'c' in rest}"
+        case {}:
+            return "any dict"
+    return "?"
+
+
+def shape_kind(s: Shape) -> str:
+    match s:
+        case Square(side=4):
+            return "square4"
+        case Square():
+            return "square"
+        case _:
+            return "shape " + s.name
+    return "?"
+
+
+def circle(c: Circle) -> str:
+    match c:
+        case Circle(Point(0, 0), r):
+            return f"centered r={r}"
+        case Circle(center=Point(x=px), r=1):
+            return f"unit at x={px}"
+        case Circle(p, r):
+            return f"circle {p.x} {p.y} {r}"
+    return "?"
+
+
+def opt(v: int | None) -> str:
+    match v:
+        case None:
+            return "none"
+        case 3:
+            return "three"
+        case w:
+            return f"value {w}"
+    return "?"
+
+
+def floats(f: float) -> str:
+    match f:
+        case 1.5:
+            return "one and a half"
+        case float(g):
+            return f"float {g}"
+    return "?"
+
+
+def bools(b: bool) -> str:
+    match b:
+        case True:
+            return "yes"
+        case False:
+            return "no"
+    return "?"
+
+
+for p in [Point(0, 0), Point(0, 5), Point(3, 0), Point(4, 4), Point(1, 2)]:
+    print(classify_point(p))
+for n in [0, 2, -5, 10, 99]:
+    print(classify_int(n))
+for s in ["a", "b", "zz"]:
+    print(classify_str(s))
+for xs in [[], [7], [1, 2], [5, 6, 7, 8]]:
+    print(seq(xs))
+for xs in [[1, 5], [9, 3, 4], [4, 4, 4], [2]]:
+    print(seq2(xs))
+for t in [(0, "q"), (5, "x"), (6, "y")]:
+    print(tup(t))
+for d in [{"a": 1, "b": 2}, {"a": 3, "c": 4, "d": 5}, {"z": 0}]:
+    print(mapping(d))
+print(shape_kind(Square(4)), shape_kind(Square(2)), shape_kind(Shape("blob")))
+print(circle(Circle(Point(0, 0), 3)))
+print(circle(Circle(Point(2, 0), 1)))
+print(circle(Circle(Point(2, 3), 5)))
+print(opt(None), opt(3), opt(8))
+print(floats(1.5), floats(2.0))
+print(bools(True), bools(False))
+
+
+def more(xs: list[int]) -> str:
+    match xs:
+        case [1, 2] | [3, 4]:
+            return "pair alt"
+        case [(5 | 6) as k, *_]:
+            return f"five or six: {k}"
+        case [*all_items] if len(all_items) > 3:
+            return f"long {all_items}"
+        case _:
+            return "nope"
+
+
+def pt_alt(p: Point) -> str:
+    match p:
+        case Point(x=1) | Point(y=1):
+            return "has a one"
+        case Point(x=int(), y=0):
+            return "int x, zero y"
+        case _:
+            return "no ones"
+
+
+def wrong_type(n: int) -> str:
+    match n:
+        case str():
+            return "string?"
+        case int():
+            return "int"
+    return "?"
+
+
+def nested(t: tuple[int, tuple[int, int]]) -> int:
+    match t:
+        case (a, (b, c)):
+            return a + b + c
+    return -1
+
+
+def dict_of_lists(d: dict[str, list[int]]) -> str:
+    match d:
+        case {"k": [x, y]}:
+            return f"k pair {x} {y}"
+        case {"k": [*ys]}:
+            return f"k list {ys}"
+        case _:
+            return "no k"
+
+
+print(more([1, 2]), more([3, 4]), more([6, 0]), more([7, 8, 9, 10]), more([0]))
+print(pt_alt(Point(1, 5)), pt_alt(Point(5, 1)), pt_alt(Point(5, 0)), pt_alt(Point(2, 2)))
+print(wrong_type(3))
+print(nested((1, (2, 3))))
+print(dict_of_lists({"k": [1, 2]}), dict_of_lists({"k": [1, 2, 3]}), dict_of_lists({"j": []}))

@@ -1,0 +1,97 @@
+from typing import Callable, Iterator, NoReturn
+
+
+def uniq[T](xs: set[T]) -> list[T]:
+    return list(xs)
+
+
+def drain[T](it: Iterator[T]) -> list[T]:
+    return [x for x in it]
+
+
+def keys[K, V](d: dict[K, V]) -> list[K]:
+    return list(d.keys())
+
+
+def swap[A, B](p: tuple[A, B]) -> tuple[B, A]:
+    return (p[1], p[0])
+
+
+def pick[T](x: T | None, default: T) -> T:
+    if x is None:
+        return default
+    return x
+
+
+def either[T](x: T | str) -> str:
+    return str(x)
+
+
+def mapf[T, R](f: Callable[[T], R], xs: list[T]) -> list[R]:
+    return [f(x) for x in xs]
+
+
+def scale(v: int) -> float:
+    return v * 1.5
+
+
+def counter(n: int) -> Iterator[int]:
+    for i in range(n):
+        yield i
+
+
+class Pair[A, B]:
+    def __init__(self, a: A, b: B) -> None:
+        self.a = a
+        self.b = b
+
+    def flip(self) -> "Pair[B, A]":
+        return Pair(self.b, self.a)
+
+
+class Stack[T]:
+    items: list[T]
+
+    def __init__(self) -> None:
+        self.items = []
+
+    def push(self, v: T) -> None:
+        self.items.append(v)
+
+    def pop(self) -> T:
+        return self.items.pop()
+
+
+def fail(msg: str) -> NoReturn:
+    raise ValueError(msg)
+
+
+def main() -> None:
+    print(sorted(uniq({3, 1, 2})))
+    print(drain(counter(3)))
+    print(keys({"a": 1, "b": 2}))
+    print(swap((1, "x")))
+    print(pick(None, 5), pick(3, 5))
+    print(either(4), either("s"))
+    print(mapf(scale, [1, 2]))
+    p = Pair(1, "one").flip()
+    print(p.a, p.b)
+    flags = [True, False, True]
+    flags.append(False)
+    print(flags[0], flags[-1], flags.count(True))
+    s: Stack[bool] = Stack()
+    s.push(True)
+    s.push(False)
+    print(s.pop(), s.pop())
+    fs: Stack[float] = Stack()
+    fs.push(2.5)
+    print(fs.pop())
+    bd: dict[str, bool] = {"y": True}
+    print(bd["y"])
+    try:
+        fail("boom")
+    except ValueError as e:
+        print("caught", e)
+
+
+main()

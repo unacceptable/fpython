@@ -1,0 +1,2 @@
+# expect: map() takes exactly 2 arguments
+m = map(str)

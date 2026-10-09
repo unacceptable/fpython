@@ -1,0 +1,3 @@
+# expect: type mismatch: expected int, got str
+def f() -> int:
+    return "a"

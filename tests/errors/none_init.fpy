@@ -1,0 +1,4 @@
+# expect: cannot infer the type of 'v' from None
+def f() -> None:
+    v = None
+    print(v)

@@ -1,0 +1,2 @@
+# expect: cannot unpack a 2-tuple into 3 targets
+a, b, c = (1, 2)

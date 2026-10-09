@@ -1,0 +1,7 @@
+# expect: 'A' does not support item assignment
+class A:
+    pass
+
+
+a = A()
+a[0] = 1

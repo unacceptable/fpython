@@ -1,0 +1,7 @@
+# expect: may be None
+class A:
+    x: int = 0
+
+
+def f(a: A | None) -> int:
+    return a.x

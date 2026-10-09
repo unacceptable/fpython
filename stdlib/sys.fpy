@@ -1,0 +1,80 @@
+# fpython stdlib: sys
+from fpython import extern
+
+
+@extern("fpy_get_argv")
+def _get_argv() -> list[str]:
+    ...
+
+
+@extern("fpy_platform")
+def _platform() -> str:
+    ...
+
+
+@extern("fpy_write")
+def _write_out(s: str) -> None:
+    ...
+
+
+@extern("fpy_write_err")
+def _write_err(s: str) -> None:
+    ...
+
+
+@extern("fpy_flush")
+def _flush() -> None:
+    ...
+
+
+@extern("fpy_input")
+def _readline(prompt: str | None) -> str:
+    ...
+
+
+class _Stream:
+    is_err: bool
+
+    def __init__(self, is_err: bool) -> None:
+        self.is_err = is_err
+
+    def write(self, s: str) -> int:
+        if self.is_err:
+            _write_err(s)
+        else:
+            _write_out(s)
+        return len(s)
+
+    def flush(self) -> None:
+        _flush()
+
+
+class _Stdin:
+    def readline(self) -> str:
+        try:
+            return _readline(None) + "\n"
+        except EOFError:
+            return ""
+
+    def read(self) -> str:
+        parts: list[str] = []
+        while True:
+            line = self.readline()
+            if line == "":
+                break
+            parts.append(line)
+        return "".join(parts)
+
+
+argv: list[str] = _get_argv()
+platform: str = _platform()
+maxsize: int = 9223372036854775807
+byteorder: str = "little"
+version: str = "3.14.0 (fpython 0.1.0)"
+stdout: _Stream = _Stream(False)
+stderr: _Stream = _Stream(True)
+stdin: _Stdin = _Stdin()
+
+
+def exit(code: int = 0) -> None:
+    raise SystemExit(code)

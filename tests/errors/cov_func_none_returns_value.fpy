@@ -1,0 +1,3 @@
+# expect: function declared to return None returns int
+def f() -> None:
+    return 5

@@ -1,0 +1,204 @@
+from dataclasses import dataclass
+from typing import Any, Callable, Iterator, Protocol
+from enum import Enum
+
+
+class Drawable(Protocol):
+    def draw(self) -> str:
+        ...
+
+
+class Circle:
+    r: float
+
+    def __init__(self, r: float) -> None:
+        self.r = r
+
+    def draw(self) -> str:
+        return f"circle({self.r})"
+
+
+def render(d: Drawable) -> str:
+    return "<" + d.draw() + ">"
+
+
+class Matrix:
+    rows: int
+    cols: int
+    data: list[float]
+
+    def __init__(self, rows: int, cols: int) -> None:
+        self.rows = rows
+        self.cols = cols
+        self.data = [0.0] * (rows * cols)
+
+    def __getitem__(self, idx: tuple[int, int]) -> float:
+        return self.data[idx[0] * self.cols + idx[1]]
+
+    def __setitem__(self, idx: tuple[int, int], v: float) -> None:
+        self.data[idx[0] * self.cols + idx[1]] = v
+
+    def __len__(self) -> int:
+        return self.rows * self.cols
+
+    def __contains__(self, v: float) -> bool:
+        return v in self.data
+
+    def __mul__(self, k: float) -> "Matrix":
+        m = Matrix(self.rows, self.cols)
+        m.data = [x * k for x in self.data]
+        return m
+
+    def __iter__(self) -> Iterator[float]:
+        for x in self.data:
+            yield x
+
+    def __str__(self) -> str:
+        return f"Matrix({self.rows}x{self.cols})"
+
+
+class Countdown:
+    n: int
+
+    def __init__(self, n: int) -> None:
+        self.n = n
+
+    def __iter__(self) -> "Countdown":
+        return self
+
+    def __next__(self) -> int:
+        if self.n <= 0:
+            raise StopIteration
+        self.n -= 1
+        return self.n + 1
+
+
+class Adder:
+    base: int
+
+    def __init__(self, base: int) -> None:
+        self.base = base
+
+    def __call__(self, x: int) -> int:
+        return self.base + x
+
+    def __bool__(self) -> bool:
+        return self.base != 0
+
+
+class Account:
+    _balance: int
+    count: int = 0
+
+    def __init__(self, balance: int) -> None:
+        self._balance = balance
+        Account.count += 1
+
+    @property
+    def balance(self) -> int:
+        return self._balance
+
+    @staticmethod
+    def fee() -> int:
+        return 2
+
+    @classmethod
+    def empty(cls) -> "Account":
+        return cls(0)
+
+
+@dataclass(frozen=True)
+class Key:
+    a: int
+    b: str
+
+
+class Level(Enum):
+    LOW = 1
+    HIGH = 2
+
+
+class Animal:
+    name: str
+
+    def __init__(self, name: str) -> None:
+        self.name = name
+
+    def speak(self) -> str:
+        return "..."
+
+    def intro(self) -> str:
+        return f"{self.name} says {self.speak()}"
+
+
+class Dog(Animal):
+    def speak(self) -> str:
+        return "woof"
+
+
+class Puppy(Dog):
+    def speak(self) -> str:
+        return super().speak() + "!"
+
+
+def total[T](items: list[T], f: Callable[[T], int]) -> int:
+    return sum(f(x) for x in items)
+
+
+def describe(v: int | str | None) -> str:
+    if v is None:
+        return "none"
+    if isinstance(v, int):
+        return f"int {v + 1}"
+    return f"str {v.upper()}"
+
+
+def shape_area(s: tuple[str, float]) -> float:
+    match s:
+        case ("square", side):
+            return side * side
+        case ("circle", r) if r > 0:
+            return 3.0 * r * r
+        case _:
+            return -1.0
+
+
+def dyn(v: Any) -> Any:
+    return v * 2
+
+
+def main() -> None:
+    print(render(Circle(1.5)))
+    m = Matrix(2, 2)
+    m[0, 1] = 3.5
+    m[1, 0] = -1.0
+    print(m, len(m), m[0, 1], 3.5 in m, 9.0 in m, list(m * 2.0), sum(m))
+    print(list(Countdown(3)), [x for x in Countdown(2)])
+    add5 = Adder(5)
+    print(add5(10), bool(add5), bool(Adder(0)))
+    a = Account(10)
+    b = Account.empty()
+    print(a.balance, b.balance, Account.fee(), Account.count)
+    seen = {Key(1, "x"): "first", Key(2, "y"): "second"}
+    print(seen[Key(1, "x")], Key(1, "x") == Key(1, "x"), len({Key(1, "x"), Key(1, "x")}))
+    print(Level.LOW, Level.HIGH.value, Level.LOW is Level.LOW, Level.LOW.name)
+    animals: list[Animal] = [Animal("cat"), Dog("rex"), Puppy("bit")]
+    print([x.intro() for x in animals])
+    print(total(["a", "bb", "ccc"], len), total([1, 2, 3], lambda v: v * v))
+    print(describe(None), describe(41), describe("hey"))
+    print(
+        shape_area(("square", 3.0)),
+        shape_area(("circle", 2.0)),
+        shape_area(("circle", -1.0)),
+        shape_area(("tri", 1.0)),
+    )
+    print(dyn(21), dyn("ab"), dyn([1]))
+    values: list[Any] = [1, "two", 3.0, None, [4]]
+    print([type(v).__name__ for v in values])
+    acc: Any = 0
+    for v in [1, 2, 3]:
+        acc = acc + v
+    print(acc, acc > 5, acc == 6)
+
+
+main()

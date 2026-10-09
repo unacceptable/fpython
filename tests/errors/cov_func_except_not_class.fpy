@@ -1,0 +1,6 @@
+# expect: except clause must name exception classes
+x = 5
+try:
+    pass
+except x:
+    pass

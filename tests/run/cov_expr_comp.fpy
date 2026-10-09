@@ -1,0 +1,200 @@
+from typing import Any, Callable, Iterator
+
+
+class Node:
+    val: int
+
+    def __init__(self, val: int) -> None:
+        self.val = val
+
+    def __eq__(self, other: object) -> bool:
+        return isinstance(other, Node) and other.val == self.val
+
+
+class Base:
+    pass
+
+
+class Left(Base):
+    pass
+
+
+class Right(Base):
+    pass
+
+
+class Sized:
+    n: int
+
+    def __init__(self, n: int) -> None:
+        self.n = n
+
+    def __bool__(self) -> bool:
+        return self.n > 0
+
+
+def comps() -> None:
+    xs = [3, 1, 4, 1, 5, 9, 2, 6]
+    print([x * x for x in xs if x > 2])
+    print(sorted({x % 3 for x in xs}))
+    print({x: x * 2 for x in xs if x % 2 == 0})
+    print([(i, j) for i in range(3) for j in range(i) if j != 1])
+    pairs = [(1, "a"), (2, "b"), (3, "c")]
+    print([f"{n}{s}" for n, s in pairs])
+    print({s: n for n, s in pairs})
+    print([i + v for i, v in enumerate(xs) if i < 3])
+    print([a * b for a, b in zip([1, 2, 3], [4, 5, 6])])
+    print([k + str(v) for k, v in {"x": 1, "y": 2}.items()])
+    nested = [[1, 2], [3, 4], [5]]
+    print([y for row in nested for y in row])
+    print([[c * 2 for c in row] for row in nested])
+    print([[a, b] for [a, b] in [[1, 2], [3, 4]]])
+    print([x for x in "hello" if x not in "lo"])
+    ws: list[float] = [x for x in range(3)]
+    print(sum(ws) + 0.5)
+    ds: dict[str, float] = {str(i): i for i in range(2)}
+    print(ds["1"] + 0.5)
+    ss: set[int] = {x for x in [1, 1, 2]}
+    print(sorted(ss))
+    a: Any = [1, 2, 3]
+    print([v for v in a])
+    print([p for (p, q) in pairs if q != "b"])
+    print(sorted({x for x in range(10) if x % 3 == 0 if x > 0}))
+
+
+def gens() -> None:
+    xs = [1, 2, 3, 4]
+    print(sum(x * x for x in xs))
+    print(list(x for x in xs if x % 2 == 0))
+    print(max(len(w) for w in ["a", "bbb", "cc"]))
+    g = (i * 10 for i in range(3))
+    print(next(g), next(g), list(g))
+    print(any(x > 3 for x in xs), all(x > 0 for x in xs))
+    print(list((a, b) for a in range(2) for b in range(2)))
+    print(sorted(k for k, v in {"b": 1, "a": 2}.items()))
+    print(",".join(str(i) for i, _ in enumerate("xyz")))
+
+
+def make_counter() -> Callable[[], int]:
+    count = 0
+
+    def inc() -> int:
+        nonlocal count
+        count += 1
+        return count
+
+    return inc
+
+
+def make_adder(n: int) -> Callable[[int], int]:
+    return lambda x: x + n
+
+
+def lambdas() -> None:
+    sq: Callable[[int], int] = lambda x: x * x
+    add: Callable[[int, int], int] = lambda a, b: a + b
+    const: Callable[[], str] = lambda: "c"
+    print(sq(5), add(2, 3), const())
+    c = make_counter()
+    c()
+    c()
+    print(c())
+    a5 = make_adder(5)
+    print(a5(10))
+    fs: list[Callable[[int], int]] = [lambda x: x + 1, lambda x: x * 2]
+    print([f(10) for f in fs])
+    words = ["bb", "a", "ccc"]
+    print(sorted(words, key=lambda w: len(w)), sorted(words, key=len))
+    print(list(map(lambda v: v * 3, [1, 2])), list(filter(lambda v: v > 1, [1, 2, 3])))
+    base = 100
+    print(list(map(lambda v: v + base, [1, 2])))
+    pick: Callable[[bool], str] = lambda b: "yes" if b else "no"
+    print(pick(True), pick(False))
+
+
+def truthiness(
+    o: Node | None,
+    s: Sized | None,
+    xs: list[int] | None,
+    t: tuple[int, str],
+    et: tuple[()],
+) -> None:
+    if o:
+        print("node", o.val)
+    else:
+        print("no node")
+    if s:
+        print("sized truthy")
+    else:
+        print("sized falsy")
+    if xs:
+        print("xs", len(xs))
+    else:
+        print("no xs")
+    print(bool(t), bool(et))
+    v = xs or [0]
+    print(v)
+    w = o or Node(-1)
+    print(w.val)
+
+
+def unify_types(flag: bool) -> None:
+    b = Left() if flag else Right()
+    print(type(b).__name__)
+    n = flag if flag else 0
+    print(n + 1)
+    m: int | None = None if flag else 3
+    print(m)
+    q = None if flag else "x"
+    print(q)
+    x: Any = 3
+    r = x if flag else 4
+    print(r)
+
+
+def eq_ops() -> None:
+    a = Node(1)
+    b = Node(1)
+    print(a == b, a != Node(2), a is b, a is not b)
+    l1 = Left()
+    l2: Left | None = None
+    print(l1 == l1, l2 == None, l2 != None)
+    print((1, 2) == (1, 2), [1, 2] != [1, 3], [1, 2] < [1, 3], (1, "a") < (1, "b"))
+    print({1: 2} == {1: 2}, "a" == "a", "a" < "b", "b" >= "a")
+    print(1 == 1.0, 2 > 1.5, True == 1, 3 <= 3)
+    p: int | None = 4
+    print(p == 4, p == None)
+    print(1 == "a", "a" != 2)
+    t = (1, "x", 2.5)
+    print("x" in t, 2.5 in t, 3 in t)
+    print(Node(1) in [Node(1)])
+    u: int | str = "q"
+    print(u == "q")
+
+
+def boolchains(a: int, b: str, c: list[int]) -> None:
+    print(a or len(c) or 7)
+    print(c or [a] or [0])
+    print((b and "y") == "", b and "z" and "w")
+    n: int | None = None
+    k: int | None = 5
+    print(n or k or 0)
+    s: str | None = None
+    print(s or "dflt")
+
+
+def main() -> None:
+    comps()
+    gens()
+    lambdas()
+    truthiness(Node(3), Sized(1), [1], (1, "a"), ())
+    truthiness(None, Sized(0), None, (2, "b"), ())
+    truthiness(None, None, [], (2, "b"), ())
+    unify_types(True)
+    unify_types(False)
+    eq_ops()
+    boolchains(0, "", [])
+    boolchains(2, "x", [1])
+
+
+main()

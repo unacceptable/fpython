@@ -1,0 +1,7 @@
+from ..shapes import Box
+
+DEPTH = 3
+
+
+def boxed(v: int) -> Box[int]:
+    return Box(v)

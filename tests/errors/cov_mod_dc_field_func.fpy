@@ -1,0 +1,10 @@
+# expect: dataclasses.field() is not supported yet
+from dataclasses import dataclass, field
+
+
+@dataclass
+class A:
+    a: list[int] = field(default_factory=list)
+
+
+print(A())

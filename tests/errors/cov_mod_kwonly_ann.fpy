@@ -1,0 +1,6 @@
+# expect: parameter 'b' needs a type annotation
+def f(a: int, *, b) -> int:
+    return a
+
+
+print(f(1, b=2))

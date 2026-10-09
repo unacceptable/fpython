@@ -1,0 +1,3 @@
+# expect: unknown generic type 'Frob'
+def f(x: Frob[int]) -> int:
+    return 0

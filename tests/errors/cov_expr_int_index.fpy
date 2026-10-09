@@ -1,0 +1,2 @@
+# expect: 'int' object is not subscriptable
+x = (5)[0]

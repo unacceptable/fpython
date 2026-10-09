@@ -1,0 +1,9 @@
+# fpython stdlib: functools
+from typing import Callable
+
+
+def reduce[T, A](function: Callable[[A, T], A], iterable: list[T], initial: A) -> A:
+    acc = initial
+    for x in iterable:
+        acc = function(acc, x)
+    return acc

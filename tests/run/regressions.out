@@ -1,0 +1,57 @@
+6
+b'hello' b'world' b'hlwl' b'\x00\x00\x00' b'hi'
+[104, 105] [97, 98] [122]
+b'abab' b'xxx' b''
+True True False True
+True False True
+True [3, 4]
+b 2
+ends9 [1, 2] 1 [2, 3] 4 short ends9 []
+1 [2, 3] 4
+3 ['c']
+child base 4
+[4, 5] [6] 4.0
+6
+7 8 0
+11-12-13[] 11+12[('z', 3)] 120 6
+'k' KeyError('k')
+'k' KeyError('k')
+3 KeyError(3)
+AssertionError() True
+AssertionError('math')
+ValueError() ValueError(3) None RuntimeError('x')
+too many values to unpack (expected 2, got 3)
+not enough values to unpack (expected 2, got 1)
+StopIteration()
+ParseError() ParseError('bad')
+$12.34 $12.3 1234c 1234c
+'h\xe9llo \u20ac\U0001d11e' 'h\xe9llo \u20ac\U0001d11e' ['h\xe9llo \u20ac\U0001d11e', 1]    'h\xe9llo \u20ac\U0001d11e'|
+value = 3.1|value= 3.14159|value =3.14159
+[3, 1, 3] [1, 3, 3] [1, 3] ['x'] {'w': 1.5}
+0x1.0000000000000p+0
+0x1.999999999999ap-4
+-0x1.4000000000000p+1
+0x0.0p+0
+-0x0.0p+0
+0x0.012688b70e62bp-1022
+0x1.7e43c8800759cp+996
+b'abc' abc b'abc' True 3 0 2.5
+[1, 0, 3, 4]
+43 set
+nonea 3none
+None  X ab None
+6 5 5 3
+2 10
+0
+6 9 0 2 (3, 2, 1) (1, 2, 3, 9) 3 [3, 2, 1]
+3 a c ('b', 'c') True ('a', 'b', 'c') 0 - - () False ()
+('x', 'y') 2 True True
+6 1 [2, 3] [1, 2, 3] True 1 2
+('bad',) 1 () (3,)
+ParseError('load failed') ValueError("invalid literal for int() with base 10: 'x'") True
+None KeyError('k')
+10.0 15.0 20.0
+1 99
+cleanup
+1
+cleanup

@@ -1,0 +1,2 @@
+# expect: 'bytes' object has no method 'zap'
+print(b"a".zap())

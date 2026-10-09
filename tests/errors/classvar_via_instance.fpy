@@ -1,0 +1,14 @@
+# expect: cannot assign to class variable 'total' through an instance
+from typing import ClassVar
+
+
+class T:
+    total: ClassVar[int] = 0
+
+    def bump(self) -> None:
+        self.total = self.total + 1
+
+
+t = T()
+t.bump()
+print(T.total, t.total)

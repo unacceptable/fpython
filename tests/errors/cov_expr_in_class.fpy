@@ -1,0 +1,6 @@
+# expect: does not support 'in'
+class A:
+    pass
+
+
+x = 1 in A()

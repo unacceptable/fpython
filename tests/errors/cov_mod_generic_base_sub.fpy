@@ -1,0 +1,10 @@
+# expect: type mismatch
+from typing import Protocol
+
+
+class P[T](Protocol[T]):
+    def get(self) -> T:
+        ...
+
+
+x: int = "s"

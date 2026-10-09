@@ -1,0 +1,5 @@
+# expect: capture patterns inside '|' alternatives are not supported
+def f(xs: list[int]) -> None:
+    match xs:
+        case [a] | [a, _]:
+            print(a)

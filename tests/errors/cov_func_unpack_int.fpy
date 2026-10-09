@@ -1,0 +1,2 @@
+# expect: cannot unpack int
+a, b = 5

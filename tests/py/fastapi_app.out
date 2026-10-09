@@ -1,0 +1,7 @@
+{'message': 'hello from native code'}
+{'n': 7, 'square': 50}
+200 {'id': 1, 'stored': True}
+{'name': 'widget', 'price': 2.5, 'tags': ['a', 'b']}
+404 {'detail': 'item not found'}
+422
+422

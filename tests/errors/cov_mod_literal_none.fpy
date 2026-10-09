@@ -1,0 +1,6 @@
+# expect: unsupported Literal type
+from typing import Literal
+
+
+def f(x: Literal[None]) -> int:
+    return 0

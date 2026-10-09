@@ -1,0 +1,7 @@
+# expect: has no attribute 'nope'
+class A:
+    x: int = 0
+
+
+a = A()
+print(a.nope)

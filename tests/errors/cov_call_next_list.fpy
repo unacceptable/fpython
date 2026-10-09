@@ -1,0 +1,2 @@
+# expect: list[int] is not an iterator
+print(next([1]))

@@ -1,0 +1,2 @@
+# expect: object of type 'int' has no len()
+print(len(5))

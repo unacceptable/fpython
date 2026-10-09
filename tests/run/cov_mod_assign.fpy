@@ -1,0 +1,115 @@
+from typing import Any, Callable, Iterable, Iterator, cast
+
+
+class Base:
+    def __init__(self, n: int) -> None:
+        self.n = n
+
+    def who(self) -> str:
+        return "base"
+
+
+class Child(Base):
+    def who(self) -> str:
+        return "child"
+
+
+def total(it: Iterable[int]) -> int:
+    s = 0
+    for v in it:
+        s += v
+    return s
+
+
+def chars(it: Iterator[str]) -> str:
+    return "-".join(it)
+
+
+def opt_base(b: Base | None) -> str:
+    return "none" if b is None else b.who()
+
+
+def make(t: type[Base], n: int) -> Base:
+    return t(n)
+
+
+def widen(a: int | str) -> str:
+    b: int | str | float = a
+    return str(b)
+
+
+def run(cb: Callable[[int], None], v: int) -> None:
+    cb(v)
+
+
+def show_pair(p: tuple[float, Any]) -> str:
+    return f"{p[0]} {p[1]}"
+
+
+def sink(v: int) -> None:
+    print("sink", v)
+
+
+def as_float(x: float) -> float:
+    return x
+
+
+def from_any(v: Any, kind: str) -> str:
+    if kind == "bytes":
+        return str(len(cast(bytes, v)))
+    if kind == "list":
+        return str(cast(list[int], v))
+    if kind == "dict":
+        return str(cast(dict[str, int], v))
+    if kind == "set":
+        return str(sorted(cast(set[int], v)))
+    if kind == "tuple":
+        return str(cast(tuple[int, int], v))
+    if kind == "opt":
+        o = cast(Base | None, v)
+        return "none" if o is None else o.who()
+    if kind == "func":
+        fn = cast(Callable[[int], int], v)
+        return str(fn(3))
+    if kind == "iter":
+        return str(list(cast(Iterator[str], v)))
+    if kind == "none":
+        return str(cast(None, v))
+    if kind == "class":
+        return cast(Base, v).who()
+    return "?"
+
+
+def dbl(x: int) -> int:
+    return x * 2
+
+
+def main() -> None:
+    print(total([1, 2]), total({3, 4}), total({5: "a", 6: "b"}), total((7, 8)))
+    print(chars("abc"), chars(iter(["x", "y"])))
+    c: Child | None = Child(1)
+    print(opt_base(c), opt_base(None))
+    print(make(Child, 2).n)
+    ct: type[Child] = Child
+    bt: type[Base] = ct
+    print(make(bt, 3).n)
+    print(widen(1), widen("w"))
+    run(sink, 5)
+    print(show_pair((1.5, "any")), as_float(True) + 0.5, as_float(2) + 0.5)
+    tf: tuple[int, str] = (1, "a")
+    tg: tuple[int, str] = tf
+    print(tg)
+    print(from_any(b"abc", "bytes"), from_any([1, 2], "list"), from_any({"k": 1}, "dict"))
+    print(
+        from_any({2, 1}, "set"),
+        from_any((1, 2), "tuple"),
+        from_any(None, "opt"),
+        from_any(Child(0), "opt"),
+    )
+    print(from_any(dbl, "func"), from_any(iter(["p", "q"]), "iter"), from_any(None, "none"))
+    print(from_any(Base(0), "class"))
+    xs: list[Any] = [1, "a", 2.5, None, True]
+    print(xs)
+
+
+main()

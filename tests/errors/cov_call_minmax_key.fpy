@@ -1,0 +1,2 @@
+# expect: key= with multiple positional arguments is not supported
+print(max(1, 2, key=lambda x: -x))

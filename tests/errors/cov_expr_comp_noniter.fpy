@@ -1,0 +1,2 @@
+# expect: is not iterable
+xs = [x for x in 5]

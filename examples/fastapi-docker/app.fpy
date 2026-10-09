@@ -1,0 +1,31 @@
+"""FastAPI service written in fpython, served by uvicorn from a FROM scratch image."""
+from fastapi import FastAPI
+import uvicorn
+
+app = FastAPI(title="fpython on scratch")
+
+
+def primes_below(n: int) -> list[int]:
+    sieve = [True] * n
+    out: list[int] = []
+    for i in range(2, n):
+        if sieve[i]:
+            out.append(i)
+            for j in range(i * i, n, i):
+                sieve[j] = False
+    return out
+
+
+@app.get("/")
+def root() -> dict[str, str]:
+    return {"service": "fpython", "runtime": "native + CPython fallback"}
+
+
+@app.get("/primes/{n}")
+def primes(n: int) -> dict[str, int]:
+    ps = primes_below(n)
+    return {"count": len(ps), "largest": ps[-1] if ps else 0}
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000, log_level="warning")

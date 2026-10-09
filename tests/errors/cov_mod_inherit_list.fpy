@@ -1,0 +1,6 @@
+# expect: cannot inherit from list[int]
+class A(list[int]):
+    pass
+
+
+print(A())

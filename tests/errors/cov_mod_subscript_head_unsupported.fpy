@@ -1,0 +1,3 @@
+# expect: unsupported type expression
+def f(x: list[int][int]) -> int:
+    return 0

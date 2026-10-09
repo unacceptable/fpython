@@ -1,0 +1,7 @@
+# expect: expected list[int], got list[str]
+def f(*xs: int) -> int:
+    return len(xs)
+
+
+ys = ["a"]
+f(*ys)

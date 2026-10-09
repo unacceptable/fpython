@@ -1,0 +1,2 @@
+# expect: got list[set[str]]
+x: int = [{"a"}]

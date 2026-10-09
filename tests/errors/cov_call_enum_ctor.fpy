@@ -1,0 +1,9 @@
+# expect: enum members cannot be constructed
+from enum import Enum
+
+
+class Color(Enum):
+    RED = 1
+
+
+c = Color(1)

@@ -1,0 +1,6 @@
+# expect: takes 1 positional arguments but 2 were given
+def f(a: int) -> int:
+    return a
+
+
+f(1, 2)

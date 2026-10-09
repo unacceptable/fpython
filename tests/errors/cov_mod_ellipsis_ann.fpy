@@ -1,0 +1,3 @@
+# expect: '...' is not a type here
+def f(x: ...) -> int:
+    return 0

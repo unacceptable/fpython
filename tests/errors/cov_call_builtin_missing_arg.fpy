@@ -1,0 +1,2 @@
+# expect: len() missing argument 1
+print(len())

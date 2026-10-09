@@ -1,0 +1,5 @@
+# expect: 'x' was already declared as int
+def f() -> None:
+    x: int = 1
+    x: str = "a"
+    print(x)

@@ -1,0 +1,6 @@
+# expect: 'math.pi' is not a type
+import math
+
+
+def f(x: math.pi) -> int:
+    return 0

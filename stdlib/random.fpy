@@ -1,0 +1,66 @@
+# fpython stdlib: random (xoshiro256**; not cryptographically secure)
+from fpython import extern
+
+
+@extern("fpy_random_seed")
+def seed(a: int) -> None:
+    ...
+
+
+@extern("fpy_random_float")
+def random() -> float:
+    ...
+
+
+@extern("fpy_random_range")
+def _range(lo: int, hi: int) -> int:
+    ...
+
+
+def randrange(start: int, stop: int = -9223372036854775807, step: int = 1) -> int:
+    if stop == -9223372036854775807:
+        return _range(0, start)
+    if step == 1:
+        return _range(start, stop)
+    n = (stop - start + step - 1) // step
+    return start + step * _range(0, n)
+
+
+def randint(a: int, b: int) -> int:
+    return _range(a, b + 1)
+
+
+def uniform(a: float, b: float) -> float:
+    return a + (b - a) * random()
+
+
+def choice[T](seq: list[T]) -> T:
+    if not seq:
+        raise IndexError("Cannot choose from an empty sequence")
+    return seq[_range(0, len(seq))]
+
+
+def shuffle[T](x: list[T]) -> None:
+    i = len(x) - 1
+    while i > 0:
+        j = _range(0, i + 1)
+        x[i], x[j] = x[j], x[i]
+        i -= 1
+
+
+def sample[T](population: list[T], k: int) -> list[T]:
+    if k > len(population) or k < 0:
+        raise ValueError("Sample larger than population or is negative")
+    pool = population.copy()
+    shuffle(pool)
+    return pool[:k]
+
+
+def gauss(mu: float = 0.0, sigma: float = 1.0) -> float:
+    import math
+    u1 = random()
+    u2 = random()
+    while u1 <= 1e-300:
+        u1 = random()
+    z = math.sqrt(-2.0 * math.log(u1)) * math.cos(2.0 * math.pi * u2)
+    return mu + sigma * z

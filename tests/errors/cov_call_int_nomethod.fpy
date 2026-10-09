@@ -1,0 +1,3 @@
+# expect: 'int' object has no method 'zap'
+x = 1
+print(x.zap())

@@ -1,0 +1,153 @@
+import math
+from typing import Any, Callable, Iterator
+
+
+class Flag:
+    on: bool
+
+    def __init__(self, on: bool) -> None:
+        self.on = on
+
+    def __bool__(self) -> bool:
+        return self.on
+
+
+class Bag:
+    items: list[str]
+
+    def __init__(self, items: list[str]) -> None:
+        self.items = items
+
+    def __contains__(self, x: str) -> bool:
+        return x in self.items
+
+    def __len__(self) -> int:
+        return len(self.items)
+
+
+class Pt:
+    x: int
+
+    def __init__(self, x: int) -> None:
+        self.x = x
+
+
+def count_up(n: int) -> Iterator[int]:
+    i = 0
+    while i < n:
+        yield i
+        i += 1
+
+
+def opt_truth(
+    s: str | None,
+    xs: list[int] | None,
+    f: Flag | None,
+    b: Bag | None,
+    p: Pt | None,
+) -> None:
+    print(
+        "s"
+        if s
+        else "-",
+        "xs"
+        if xs
+        else "-",
+        "f"
+        if f
+        else "-",
+        "b"
+        if b
+        else "-",
+        "p"
+        if p
+        else "-",
+    )
+
+
+def misc_truth() -> None:
+    fn: Callable[[int], int] = lambda v: v
+    it = count_up(2)
+    print(bool(fn), bool(it), bool(Pt), not not (1, 2))
+    if fn and it:
+        print("callable and iterator")
+    d: dict[str, int] = {}
+    st: set[int] = set()
+    print(not d, not st, bool({"a": 1}), bool({1}))
+
+
+def narrowing(v: int | str, w: str | Pt, a: Any) -> None:
+    if isinstance(v, str):
+        print("str", v + "!")
+    else:
+        print("int", v * 2)
+    if not isinstance(w, Pt):
+        print("w str", w.lower())
+    else:
+        print("w pt", w.x)
+    if isinstance(v, (int, float)):
+        print("number")
+    n: int | None = 3 if isinstance(a, int) else None
+    print(n)
+    x = 5
+    print(x is None, x is not None, None is x)
+    print(x.__class__.__name__, a.__class__.__name__)
+
+
+def dyn_ops(a: Any, b: Any) -> None:
+    print(a + b, a - b, a * b, a // b, a % b, a**2)
+    print(a << 1, a >> 1, a & b, a | b, a ^ b)
+    print(-a, a + 1.5, 2 - a)
+    print(a == b, a < b, a in [1, 2, 3])
+    lst: Any = [1, 2, 3]
+    print(2 in lst, lst[0], lst[-1])
+    print([p * q for p, q in [(1, 2), (3, 4)]])
+    pairs: Any = [[1, 2], [3, 4]]
+    print([p + q for p, q in pairs])
+
+
+def containers(bag: Bag) -> None:
+    print("a" in bag, "z" in bag, "z" not in bag, len(bag))
+    t: tuple[()] = ()
+    print(1 in t)
+    nested = {"k": {"j": [1, 2, 3]}}
+    print(nested["k"]["j"][-1], nested["k"]["j"][::-1])
+    keys = [k for k in nested]
+    print(keys)
+    u: list[int | str] = [1, "a", 2]
+    print([e for e in u if isinstance(e, int)])
+    print("a" in u, 2 in u)
+    m = [[1, 2], [3]]
+    print(m[0] + m[1], m[1] * 2)
+    s = "abc"
+    print(s[1], s[-1], s * 0, 0 * [1])
+
+
+def big_numbers() -> None:
+    print(9223372036854775807, -9223372036854775807)
+    print(2**62, 7 // -2, -7 // 2, 7 % -3, -7 % 3)
+    print(1.0 / 3.0, 2.0**(-1), 10 / 4, 9 / 3)
+
+
+def module_values() -> None:
+    f: Callable[[float], float] = math.sqrt
+    g = math.floor
+    print(f(16.0), g(2.5), math.pi > 3, __name__)
+    s = "plain"
+    print(f"{s!a}")
+
+
+def main() -> None:
+    module_values()
+    opt_truth("x", [1], Flag(True), Bag(["q"]), Pt(1))
+    opt_truth("", [], Flag(False), Bag([]), None)
+    opt_truth(None, None, None, None, None)
+    misc_truth()
+    narrowing(3, "AB", 1)
+    narrowing("s", Pt(9), "x")
+    dyn_ops(7, 3)
+    containers(Bag(["a", "b"]))
+    big_numbers()
+
+
+main()

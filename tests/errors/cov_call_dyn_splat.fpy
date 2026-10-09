@@ -1,0 +1,7 @@
+# expect: *args splats in dynamic calls are not supported yet
+from typing import Any
+
+
+def f(g: Any, xs: list[int]) -> Any:
+    g(3, lambda v: v, key=lambda a, b: a)
+    return g(*xs)

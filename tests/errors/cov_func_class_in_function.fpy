@@ -1,0 +1,4 @@
+# expect: classes must be defined at module level
+def f() -> None:
+    class Inner:
+        pass

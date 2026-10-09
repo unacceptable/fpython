@@ -1,0 +1,4 @@
+# expect: cannot be used as a value
+import math
+
+m = math

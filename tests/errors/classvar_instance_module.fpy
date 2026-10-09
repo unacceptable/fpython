@@ -1,0 +1,10 @@
+# expect: cannot assign to class variable
+from typing import ClassVar
+
+
+class C:
+    n: ClassVar[int] = 0
+
+
+c = C()
+c.n = 3

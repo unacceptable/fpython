@@ -1,0 +1,135 @@
+from typing import Callable, Protocol
+
+
+class Greeter(Protocol):
+    def greet(self, name: str) -> str:
+        ...
+
+    def poke(self, n: int) -> None:
+        ...
+
+
+class English:
+    def greet(self, name: str) -> str:
+        return "hello " + name
+
+    def poke(self, n: int) -> None:
+        print("poked", n)
+
+
+class French:
+    def greet(self, name: str) -> str:
+        return "bonjour " + name
+
+    def poke(self, n: int) -> None:
+        print("touche", n * 2)
+
+
+def welcome(g: Greeter, who: str) -> None:
+    print(g.greet(who))
+    g.poke(3)
+
+
+class Box[T]:
+    def __init__(self, item: T) -> None:
+        self.item = item
+
+    def get(self) -> T:
+        return self.item
+
+
+class Pair[A, B]:
+    def __init__(self, a: A, b: B) -> None:
+        self.a = a
+        self.b = b
+
+    def show(self) -> str:
+        return f"{self.a}/{self.b}"
+
+
+class Animal:
+    def __init__(self, name: str) -> None:
+        self.name = name
+
+    def speak(self, times: int, loud: bool = False) -> str:
+        return "..." * times
+
+    def describe(self) -> str:
+        return self.name + ": " + self.speak(2)
+
+    @staticmethod
+    def kingdom() -> str:
+        return "animalia"
+
+    @classmethod
+    def make(cls, name: str) -> "Animal":
+        return Animal(name)
+
+
+class Dog(Animal):
+    def __init__(self, name: str, tricks: int) -> None:
+        super().__init__(name)
+        self.tricks = tricks
+
+    def speak(self, times: int, loud: bool = False) -> str:
+        s = "woof" * times
+        if loud:
+            s = s.upper()
+        return s + " " + super().speak(1)
+
+
+class Holder:
+    def __init__(self, fn: Callable[[int], int]) -> None:
+        self.fn = fn
+        self.factor = 3
+
+    @property
+    def scaler(self) -> Callable[[int], int]:
+        f = self.factor
+        return lambda x: x * f
+
+
+class Empty:
+    pass
+
+
+def protocols() -> None:
+    welcome(English(), "bob")
+    welcome(French(), "anne")
+
+
+def templates() -> None:
+    b = Box(5)
+    print(b.get() + 1)
+    bs = Box("s")
+    print(bs.get() + "t")
+    p = Pair(1, "x")
+    print(p.show())
+    q = Pair[int, int](2, 3)
+    print(q.show())
+
+
+def methods() -> None:
+    a = Animal("cat")
+    d = Dog("rex", 3)
+    print(a.speak(2), d.speak(2), d.speak(1, loud=True))
+    animals: list[Animal] = [a, d]
+    for x in animals:
+        print(x.speak(1, True))
+        print(x.describe())
+    print(Animal.kingdom(), d.kingdom(), a.kingdom())
+    print(Animal.make("emu").name, d.make("owl").name, Dog.make("yak").name)
+    print(Animal.speak(d, 2))
+    print(Dog.speak(d, 1, loud=True))
+    h = Holder(lambda v: v + 1)
+    print(h.fn(10))
+    print(h.scaler(7))
+    e = Empty()
+    print(type(e).__name__)
+    cls = type(d)
+    print(cls.kingdom())
+
+
+protocols()
+templates()
+methods()

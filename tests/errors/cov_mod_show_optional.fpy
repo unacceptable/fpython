@@ -1,0 +1,4 @@
+# expect: got str | None
+def f(a: str | None) -> str:
+    b: int = a
+    return ""

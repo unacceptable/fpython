@@ -1,0 +1,6 @@
+# expect: values are not orderable
+class A:
+    pass
+
+
+print(sorted([A(), A()]))

@@ -1,0 +1,7 @@
+# expect: unsupported type expression
+class A:
+    pass
+
+
+def f(x: A.b) -> int:
+    return 0

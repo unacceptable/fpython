@@ -1,0 +1,38 @@
+import pyhelpers
+from pyhelpers import Square, make_counter
+
+print(pyhelpers.square(7), pyhelpers.GREETING)
+print(pyhelpers.stats([1.0, 2.0, 3.0, 4.0]))
+print(pyhelpers.stats([2.5, 3.5], precision=1))
+print(pyhelpers.word_freq("The cat and the hat. The end!"))
+print(pyhelpers.safe_div(1, 4), pyhelpers.safe_div(1, 0))
+c = make_counter(10)
+c()
+print(c(5))
+s = Square.of(3)
+print(s, s.describe(), s.area, Square.unit().area)
+print(pyhelpers.classify(16))
+print(pyhelpers.unpack_demo([1, 2, 3, 4]))
+print(pyhelpers.dict_comp(["ab", "c", ""]))
+print(pyhelpers.with_demo("/tmp/fpy_native_test.txt"))
+try:
+    pyhelpers.stats([])
+except ValueError as e:
+    print("caught:", e)
+print(sorted(pyhelpers._registry.keys()))
+print(getattr(pyhelpers, "__fpython_compiled__", False))
+print(list(pyhelpers.countdown(5)))
+g = pyhelpers.countdown(10)
+print(next(g), g.send(3), next(g))
+print(list(pyhelpers.chained([1, 2], (3, 4), "ab")))
+print(sum(pyhelpers.lazy_squares(range(10))), list(pyhelpers.lazy_squares([1, 2, 3])))
+print(pyhelpers.first_match([1, 4, 9, 16], lambda v: v > 5))
+gg = pyhelpers.guarded()
+print(next(gg))
+gg.close()
+print("closed" in pyhelpers._registry)
+print(pyhelpers.parse_ints(["1", "x", "3"]))
+import asyncio
+import inspect
+print(asyncio.run(pyhelpers.async_demo()))
+print(inspect.iscoroutinefunction(pyhelpers.async_add))

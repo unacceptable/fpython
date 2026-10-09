@@ -1,0 +1,4 @@
+# expect: module cannot be used as a value
+import os
+
+x = os.path

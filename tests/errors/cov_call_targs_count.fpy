@@ -1,0 +1,9 @@
+# expect: expected 1 type arguments
+def first[T](xs: list[T]) -> T:
+    return xs[0]
+
+
+a = first[int]([1])
+b = first[str](["s"])
+print(a, b)
+c = first[int, str]([1])

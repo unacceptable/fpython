@@ -1,0 +1,10 @@
+# expect: unsupported comprehension target
+class A:
+    v: int
+
+    def __init__(self) -> None:
+        self.v = 0
+
+
+a = A()
+xs = [1 for a.v in [1, 2]]

@@ -1,0 +1,39 @@
+origin
+on y axis at 5
+on x axis at 3
+diagonal 4
+other 1,2
+small
+small
+negative -5
+ten 10
+big
+ab
+ab
+str zz
+empty
+one 7
+two 1 2
+first 5 rest [6, 7, 8]
+starts with one
+nine then [3, 4]
+three
+other
+zero q
+x 5
+6:y
+a1 b2
+a3 has c: True
+any dict
+square4 square shape blob
+centered r=3
+unit at x=2
+circle 2 3 5
+none three value 8
+one and a half float 2.0
+yes no
+pair alt pair alt five or six: 6 long [7, 8, 9, 10] nope
+has a one has a one int x, zero y no ones
+int
+6
+k pair 1 2 k list [1, 2, 3] no k

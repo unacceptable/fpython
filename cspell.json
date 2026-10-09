@@ -1,0 +1,4 @@
+{
+  "version": "0.2",
+  "words": ["fpython", "fpy", "monomorphized", "monomorphization", "ints", "fastmcp", "interop", "toolchain", "musl", "CPython", "subcommands", "httpx", "boto", "xoshiro", "dataclass", "dataclasses", "itertools", "heapq", "bisect", "nonlocal", "kwonly", "vararg", "kwarg", "typeshed", "libpython", "aztek"]
+}

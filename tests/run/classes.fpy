@@ -1,0 +1,97 @@
+from dataclasses import dataclass
+
+
+class Shape:
+    name: str
+
+    def __init__(self, name: str) -> None:
+        self.name = name
+
+    def area(self) -> float:
+        return 0.0
+
+    def describe(self) -> str:
+        return f"{self.name} with area {self.area():.2f}"
+
+
+class Circle(Shape):
+    r: float
+
+    def __init__(self, r: float) -> None:
+        super().__init__("circle")
+        self.r = r
+
+    def area(self) -> float:
+        return 3.14159 * self.r * self.r
+
+
+class Rect(Shape):
+    w: float
+    h: float
+
+    def __init__(self, w: float, h: float) -> None:
+        super().__init__("rect")
+        self.w = w
+        self.h = h
+
+    def area(self) -> float:
+        return self.w * self.h
+
+
+@dataclass
+class Point:
+    x: int
+    y: int = 0
+
+    def norm2(self) -> int:
+        return self.x * self.x + self.y * self.y
+
+
+@dataclass(order=True, frozen=True)
+class Version:
+    major: int
+    minor: int
+
+
+class Counter:
+    count: int
+
+    def __init__(self) -> None:
+        self.count = 0
+
+    def inc(self, by: int = 1) -> "Counter":
+        self.count += by
+        return self
+
+    def __len__(self) -> int:
+        return self.count
+
+    def __add__(self, other: "Counter") -> "Counter":
+        c = Counter()
+        c.count = self.count + other.count
+        return c
+
+    def __eq__(self, other: object) -> bool:
+        return isinstance(other, Counter) and other.count == self.count
+
+    def __repr__(self) -> str:
+        return f"Counter({self.count})"
+
+
+shapes: list[Shape] = [Circle(1.0), Rect(2.0, 3.0), Shape("blob")]
+for s in shapes:
+    print(s.describe())
+total = sum(s.area() for s in shapes)
+print(f"total={total:.3f}")
+
+p = Point(3, 4)
+print(p, p.norm2(), p == Point(3, 4), p == Point(1))
+q = Point(x=5)
+print(q)
+vs = [Version(1, 2), Version(0, 9), Version(1, 0)]
+print(sorted(vs))
+print(Version(1, 2) < Version(1, 3), hash(Version(1, 2)) == hash(Version(1, 2)))
+
+c = Counter().inc().inc(5)
+print(c, len(c), c + c, c == Counter().inc(6), bool(Counter()))
+print(isinstance(shapes[0], Circle), isinstance(shapes[1], Circle))

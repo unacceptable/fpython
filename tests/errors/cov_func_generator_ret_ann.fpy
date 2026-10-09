@@ -1,0 +1,3 @@
+# expect: must be annotated to return Iterator[T]
+def g() -> int:
+    yield 1

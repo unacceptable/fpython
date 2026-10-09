@@ -1,0 +1,2 @@
+# expect: zip() with other than 2 arguments is only supported directly in for loops
+z = zip([1], [2], [3])

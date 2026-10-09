@@ -1,0 +1,6 @@
+# expect: key must be a function of one
+def k(a: int, b: int) -> int:
+    return a
+
+
+print(sorted([1, 2], key=k))

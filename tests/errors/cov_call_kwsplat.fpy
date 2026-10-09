@@ -1,0 +1,7 @@
+# expect: **kwargs splat in calls is not supported
+def f(a: int) -> int:
+    return a
+
+
+d = {"a": 1}
+f(**d)

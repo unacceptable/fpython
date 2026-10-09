@@ -1,0 +1,21 @@
+# fpython toolchain with the CPython 3.14 fallback (musl). Programs that import Python libraries
+# are built here and packaged for FROM scratch with `fpython bundle`.
+#
+#   docker build -f docker/Dockerfile.python -t fpython-py:latest .
+FROM rust:1-alpine AS toolchain-build
+RUN apk add --no-cache musl-dev
+WORKDIR /fpython
+COPY Cargo.toml ./
+COPY src ./src
+COPY runtime ./runtime
+COPY stdlib ./stdlib
+RUN cargo build --release && strip target/release/fpython
+
+FROM python:3.14-alpine
+RUN apk add --no-cache gcc musl-dev
+COPY --from=toolchain-build /fpython/target/release/fpython /usr/local/bin/fpython
+ENV FPY_CACHE_DIR=/var/cache/fpython FPY_PYTHON=/usr/local/bin/python3
+RUN mkdir -p /var/cache/fpython && printf 'import json\nprint("ok")\n' > /tmp/w.fpy && fpython run /tmp/w.fpy && rm /tmp/w.fpy
+WORKDIR /src
+ENTRYPOINT ["fpython"]
+CMD ["--help"]

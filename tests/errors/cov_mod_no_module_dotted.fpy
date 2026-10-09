@@ -1,0 +1,4 @@
+# expect: no module named 'zz_cov_missing.sub'
+import zz_cov_missing.sub
+
+print(1)
